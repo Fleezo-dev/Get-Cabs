@@ -108,6 +108,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <!-- Pure CSS Stylesheet -->
   <link rel="stylesheet" href="./style.css" />
+  <link rel="preload" as="image" href="./public/assets/images/dest-ooty.png" />
   <script>
     window.getFallbackSvg = function(title) {
       const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Get Cabs Coimbatore';
@@ -204,6 +205,18 @@
       text-align: center;
       font-style: italic;
     }
+  
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
   </style>
 </head>
 <body>
@@ -292,18 +305,9 @@
     </div>
   </header>
 
+  <main>
   <!-- Hero Section & Booking Form (BELOW THE HEADER) -->
   <section class="hero-booking-section" id="booking-form-section">
-    <!-- Background Travel Video Loop -->
-    <div class="hero-bg-video-wrapper">
-      <canvas id="hero-canvas" class="hero-bg-canvas"></canvas>
-      <video class="hero-bg-video" id="hero-video" autoplay loop muted playsinline poster="./public/assets/images/dest-ooty.png" crossorigin="anonymous">
-        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
-        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4" type="video/mp4" />
-      </video>
-      <div class="hero-video-overlay"></div>
-    </div>
-
     <div class="container">
       <div class="hero-header-text">
         <span class="badge" style="background:var(--brand-yellow); color:var(--brand-dark);">24/7 Instant Cab Service</span>
@@ -334,26 +338,26 @@
           <form id="form-local">
             <div class="form-grid-3">
               <div class="field-group">
-                <label>📍 Pickup Location</label>
+                <label for="local-pickup">📍 Pickup Location</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="local-pickup" placeholder="e.g. Gandhipuram, Peelamedu, RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>🏁 Dropoff Location</label>
+                <label for="local-drop">🏁 Dropoff Location</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="local-drop" placeholder="e.g. Coimbatore Airport CJB or Railway Station" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>📅 Pickup Date & Time</label>
-                <input type="datetime-local" class="input-ctrl" data-field="date" required />
+                <label for="local-date">📅 Pickup Date & Time</label>
+                <input type="datetime-local" class="input-ctrl" data-field="date" id="local-date" required />
               </div>
             </div>
 
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
-                <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
+                <label for="local-phone">📱 Mobile Number</label>
+                <input type="tel" class="input-ctrl" data-field="phone" id="local-phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
-                <label>🚗 Vehicle Type</label>
+                <label for="local-cab-type">🚗 Vehicle Type</label>
                 <select class="input-ctrl" id="local-cab-type">
                   <option value="sedan" selected>Sedan (Dzire / Etios)</option>
                   <option value="prime_sedan">Prime Sedan (Ciaz / Sunny / Aura)</option>
@@ -385,26 +389,26 @@
           <form id="form-oneway">
             <div class="form-grid-3">
               <div class="field-group">
-                <label>📍 Pickup City / Area</label>
+                <label for="oneway-pickup">📍 Pickup City / Area</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="oneway-pickup" placeholder="e.g. Coimbatore, Gandhipuram, RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>🏁 Destination City / Drop Location</label>
+                <label for="oneway-drop">🏁 Destination City / Drop Location</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="oneway-drop" placeholder="e.g. Ooty, Munnar, Tiruppur, Palakkad, Erode" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>📅 Departure Date & Time</label>
-                <input type="datetime-local" class="input-ctrl" data-field="date" required />
+                <label for="oneway-date">📅 Departure Date & Time</label>
+                <input type="datetime-local" class="input-ctrl" data-field="date" id="oneway-date" required />
               </div>
             </div>
 
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
-                <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
+                <label for="oneway-phone">📱 Mobile Number</label>
+                <input type="tel" class="input-ctrl" data-field="phone" id="oneway-phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
-                <label>🚗 Cab Choice</label>
+                <label for="oneway-cab-type">🚗 Cab Choice</label>
                 <select class="input-ctrl" id="oneway-cab-type">
                   <option value="sedan" selected>Sedan (Dzire / Etios)</option>
                   <option value="prime_sedan">Prime Sedan (Ciaz / Sunny / Aura)</option>
@@ -436,23 +440,23 @@
           <form id="form-outstation">
             <div class="form-grid-5">
               <div class="field-group">
-                <label>📍 From City</label>
+                <label for="outstation-pickup">📍 From City</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="outstation-pickup" placeholder="e.g. Coimbatore, Airport CJB, Railway Station" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>🏁 Destination Cities</label>
+                <label for="outstation-drop">🏁 Destination Cities</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="outstation-drop" placeholder="e.g. Ooty, Munnar, Kodaikanal" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>📅 Start Date</label>
-                <input type="date" class="input-ctrl" data-field="date" required />
+                <label for="outstation-start-date">📅 Start Date</label>
+                <input type="date" class="input-ctrl" data-field="date" id="outstation-start-date" required />
               </div>
               <div class="field-group">
-                <label>📅 Return Date</label>
-                <input type="date" class="input-ctrl" required />
+                <label for="outstation-return-date">📅 Return Date</label>
+                <input type="date" class="input-ctrl" id="outstation-return-date" required />
               </div>
               <div class="field-group">
-                <label>⛰️ Hill Station Route</label>
+                <label for="outstation-is-hills">⛰️ Hill Station Route</label>
                 <select class="input-ctrl" id="outstation-is-hills">
                   <option value="no" selected>Auto-Detect / Plain Route</option>
                   <option value="yes">Yes - Hill Station Route</option>
@@ -462,11 +466,11 @@
 
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
-                <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
+                <label for="outstation-phone">📱 Mobile Number</label>
+                <input type="tel" class="input-ctrl" data-field="phone" id="outstation-phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
-                <label>🚗 Vehicle Class</label>
+                <label for="outstation-cab-type">🚗 Vehicle Class</label>
                 <select class="input-ctrl" id="outstation-cab-type">
                   <option value="sedan" selected>Sedan (Dzire / Etios)</option>
                   <option value="prime_sedan">Prime Sedan (Ciaz / Sunny / Aura)</option>
@@ -497,7 +501,7 @@
           <form id="form-hourly">
             <div class="form-grid-4">
               <div class="field-group">
-                <label>⏱️ Select Rental Duration</label>
+                <label for="hourly-pkg-select">⏱️ Select Rental Duration</label>
                 <select class="input-ctrl" id="hourly-pkg-select">
                   <option value="1">1 Hour Rental (10 KM Package)</option>
                   <option value="2">2 Hours Rental (20 KM Package)</option>
@@ -511,22 +515,22 @@
                 </select>
               </div>
               <div class="field-group">
-                <label>📍 Pickup Location</label>
+                <label for="hourly-pickup">📍 Pickup Location</label>
                 <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="hourly-pickup" placeholder="e.g. Coimbatore Railway Station / RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>📅 Start Date & Time</label>
-                <input type="datetime-local" class="input-ctrl" data-field="date" required />
+                <label for="hourly-date">📅 Start Date & Time</label>
+                <input type="datetime-local" class="input-ctrl" data-field="date" id="hourly-date" required />
               </div>
               <div class="field-group">
-                <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
+                <label for="hourly-phone">📱 Mobile Number</label>
+                <input type="tel" class="input-ctrl" data-field="phone" id="hourly-phone" placeholder="Your 10-digit mobile number" required />
               </div>
             </div>
 
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
-                <label>🚗 Vehicle Category</label>
+                <label for="hourly-cab-type">🚗 Vehicle Category</label>
                 <select class="input-ctrl" id="hourly-cab-type">
                   <option value="sedan" selected>Sedan (Dzire / Etios)</option>
                   <option value="prime_sedan">Prime Sedan (Ciaz / Sunny / Aura)</option>
@@ -535,8 +539,8 @@
                 </select>
               </div>
               <div class="field-group">
-                <label>📝 Special Instructions</label>
-                <input type="text" class="input-ctrl" placeholder="e.g. Shopping stops in RS Puram" />
+                <label for="hourly-instructions">📝 Special Instructions</label>
+                <input type="text" class="input-ctrl" id="hourly-instructions" placeholder="e.g. Shopping stops in RS Puram" />
               </div>
               <div class="field-group">
                 <button type="submit" class="btn btn-red" style="height:46px; width:100%;">Book Hourly Rental</button>
@@ -597,7 +601,7 @@
       <div class="routes-grid">
         <div class="route-card reveal delay-1">
           <div class="route-details">
-            <h4>Coimbatore ➔ Ooty Bus Stand</h4>
+            <h3>Coimbatore ➔ Ooty Bus Stand</h3>
             <p>87 KM • Nilgiris Hill Route</p>
           </div>
           <div class="route-fare">
@@ -608,7 +612,7 @@
 
         <div class="route-card reveal delay-2">
           <div class="route-details">
-            <h4>Coimbatore ➔ Pollachi</h4>
+            <h3>Coimbatore ➔ Pollachi</h3>
             <p>43 KM • Express Corridor</p>
           </div>
           <div class="route-fare">
@@ -619,7 +623,7 @@
 
         <div class="route-card reveal delay-3">
           <div class="route-details">
-            <h4>Coimbatore ➔ Palani</h4>
+            <h3>Coimbatore ➔ Palani</h3>
             <p>110 KM • Temple Pilgrimage</p>
           </div>
           <div class="route-fare">
@@ -630,7 +634,7 @@
 
         <div class="route-card reveal delay-4">
           <div class="route-details">
-            <h4>Coimbatore ➔ Tiruppur</h4>
+            <h3>Coimbatore ➔ Tiruppur</h3>
             <p>55 KM • Textile Hub Corridor</p>
           </div>
           <div class="route-fare">
@@ -641,7 +645,7 @@
 
         <div class="route-card reveal delay-5">
           <div class="route-details">
-            <h4>Coimbatore ➔ Erode</h4>
+            <h3>Coimbatore ➔ Erode</h3>
             <p>100 KM • Highway Express</p>
           </div>
           <div class="route-fare">
@@ -652,7 +656,7 @@
 
         <div class="route-card reveal delay-6">
           <div class="route-details">
-            <h4>Coimbatore ➔ Sathyamangalam</h4>
+            <h3>Coimbatore ➔ Sathyamangalam</h3>
             <p>70 KM • Highway Corridor</p>
           </div>
           <div class="route-fare">
@@ -676,25 +680,25 @@
       <div class="features-4-grid">
         <div class="feature-box reveal delay-1">
           <div class="feature-icon-circle">⏱️</div>
-          <h4>On-Time Arrival Guarantee</h4>
+          <h3>On-Time Arrival Guarantee</h3>
           <p>We value your time. Driver details are assigned 20 minutes prior, ensuring zero delay at your doorstep.</p>
         </div>
 
         <div class="feature-box reveal delay-2">
           <div class="feature-icon-circle">🏷️</div>
-          <h4>Fixed Honest Tariff</h4>
+          <h3>Fixed Honest Tariff</h3>
           <p>No sudden peak hour pricing multipliers or meter manipulations. Transparent pricing fixed upfront.</p>
         </div>
 
         <div class="feature-box reveal delay-3">
           <div class="feature-icon-circle">🛡️</div>
-          <h4>24/7 Live GPS Security</h4>
+          <h3>24/7 Live GPS Security</h3>
           <p>Every vehicle is linked to our central monitoring system with emergency panic buttons for passenger safety.</p>
         </div>
 
         <div class="feature-box reveal delay-4">
           <div class="feature-icon-circle">🧼</div>
-          <h4>Sanitised Comfort Cabs</h4>
+          <h3>Sanitised Comfort Cabs</h3>
           <p>Daily sanitized vehicles with cool air conditioning, clean seats, mobile phone chargers, and tissue boxes.</p>
         </div>
       </div>
@@ -775,28 +779,28 @@
       <div class="services-grid">
         <div class="service-item-card reveal delay-1">
           <div style="font-size:2.5rem;">🛫</div>
-          <h4>Coimbatore Airport Taxi</h4>
+          <h3>Coimbatore Airport Taxi</h3>
           <p>Guaranteed pickup and drop at Coimbatore International Airport (CJB). Real-time flight tracking included.</p>
           <a href="#booking-form-section" style="color:var(--brand-red); font-weight:800;">Book Airport Taxi →</a>
         </div>
 
         <div class="service-item-card reveal delay-2">
           <div style="font-size:2.5rem;">🚉</div>
-          <h4>Railway Station Transfers</h4>
+          <h3>Railway Station Transfers</h3>
           <p>Direct cab pickups from Coimbatore Junction (CBE), Podanur, and Singanallur railway stations.</p>
           <a href="#booking-form-section" style="color:var(--brand-red); font-weight:800;">Book Station Taxi →</a>
         </div>
 
         <div class="service-item-card reveal delay-3">
           <div style="font-size:2.5rem;">🚘</div>
-          <h4>Hourly Local Rentals</h4>
+          <h3>Hourly Local Rentals</h3>
           <p>Hire a cab for 2, 4, 8, or 12 hours with flexible mileage packages for shopping, doctor visits, and business meetings.</p>
           <a href="#booking-form-section" style="color:var(--brand-red); font-weight:800;">Book Hourly Package →</a>
         </div>
 
         <div class="service-item-card reveal delay-4">
           <div style="font-size:2.5rem;">🏢</div>
-          <h4>Corporate Fleet Travel</h4>
+          <h3>Corporate Fleet Travel</h3>
           <p>Monthly cab rentals, executive sedans, and corporate account management with GST invoicing for companies.</p>
           <a href="tel:9894020156" style="color:var(--brand-red); font-weight:800;">Call 9894020156 →</a>
         </div>
@@ -827,7 +831,7 @@
 
         <div class="info-image-wrap reveal delay-2">
           <img 
-            src="./public/assets/images/coimbatore-local-cab.png" 
+            src="./public/assets/images/coimbatore-local-cab.png" width="600" height="400" loading="lazy" 
             alt="Coimbatore Local & Adiyogi Cab Get Cabs" 
             referrerpolicy="no-referrer"
             onerror="window.handleImgError(this, 'Coimbatore & Adiyogi Shiva');"
@@ -853,7 +857,7 @@
           <div class="reviewer-meta">
             <div class="reviewer-avatar">S</div>
             <div class="reviewer-details">
-              <h5>Suresh Kumar</h5>
+              <h3>Suresh Kumar</h3>
               <span>Gandhipuram, Coimbatore</span>
             </div>
           </div>
@@ -865,7 +869,7 @@
           <div class="reviewer-meta">
             <div class="reviewer-avatar">P</div>
             <div class="reviewer-details">
-              <h5>Priya Loganathan</h5>
+              <h3>Priya Loganathan</h3>
               <span>RS Puram, Coimbatore</span>
             </div>
           </div>
@@ -877,7 +881,7 @@
           <div class="reviewer-meta">
             <div class="reviewer-avatar">R</div>
             <div class="reviewer-details">
-              <h5>Ramesh V</h5>
+              <h3>Ramesh V</h3>
               <span>IT Professional</span>
             </div>
           </div>
@@ -899,7 +903,7 @@
         <!-- Package 1: Ooty, Coonoor & Kotagiri -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-ooty.png" alt="Ooty Coonoor Kotagiri Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Ooty Coonoor Nilgiris Tour');" />
+            <img src="./public/assets/images/dest-ooty.png" width="400" height="250" loading="lazy" alt="Ooty Coonoor Kotagiri Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Ooty Coonoor Nilgiris Tour');" />
             <span class="package-badge-category">Nilgiris Hill Special</span>
             <span class="package-duration-pill">⏱️ Full Day / 2 Days</span>
           </div>
@@ -925,7 +929,7 @@
         <!-- Package 2: Munnar -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-munnar.png" alt="Munnar Tea Hills Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Munnar Tea Hills Tour');" />
+            <img src="./public/assets/images/dest-munnar.png" width="400" height="250" loading="lazy" alt="Munnar Tea Hills Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Munnar Tea Hills Tour');" />
             <span class="package-badge-category">Tea Hills & Waterfalls</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -951,7 +955,7 @@
         <!-- Package 3: Kodaikanal -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-kodaikanal.png" alt="Kodaikanal Lake Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kodaikanal Lake & Hills');" />
+            <img src="./public/assets/images/dest-kodaikanal.png" width="400" height="250" loading="lazy" alt="Kodaikanal Lake Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kodaikanal Lake & Hills');" />
             <span class="package-badge-category">Princess of Hills</span>
             <span class="package-duration-pill">⏱️ Full Day / 2 Days</span>
           </div>
@@ -977,7 +981,7 @@
         <!-- Package 4: Yercaud -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-coonoor.png" alt="Yercaud Shevaroy Hills Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Yercaud Shevaroy Hills');" />
+            <img src="./public/assets/images/dest-coonoor.png" width="400" height="250" loading="lazy" alt="Yercaud Shevaroy Hills Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Yercaud Shevaroy Hills');" />
             <span class="package-badge-category">Weekend Hill Gateway</span>
             <span class="package-duration-pill">⏱️ Full Day Tour</span>
           </div>
@@ -1003,7 +1007,7 @@
         <!-- Package 5: Isha Yoga & Vellingiri Hills -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-adiyogi.png" alt="Isha Yoga Adiyogi Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Adiyogi Isha Yoga');" />
+            <img src="./public/assets/images/dest-adiyogi.png" width="400" height="250" loading="lazy" alt="Isha Yoga Adiyogi Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Adiyogi Isha Yoga');" />
             <span class="package-badge-category">Spiritual & Wellness</span>
             <span class="package-duration-pill">⏱️ Half Day / Full Day</span>
           </div>
@@ -1029,7 +1033,7 @@
         <!-- Package 6: Kerala Coastal & Beach Special -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-wayanad.png" alt="Kerala Cherai Alleppey Beach Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kerala Beach & Backwaters');" />
+            <img src="./public/assets/images/dest-wayanad.png" width="400" height="250" loading="lazy" alt="Kerala Cherai Alleppey Beach Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kerala Beach & Backwaters');" />
             <span class="package-badge-category">Beaches & Backwaters</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1055,7 +1059,7 @@
         <!-- Package 7: Pilgrimage & Heritage Special -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-madurai.png" alt="Guruvayur Madurai Trichy Temple Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Guruvayur Madurai Pilgrimage');" />
+            <img src="./public/assets/images/dest-madurai.png" width="400" height="250" loading="lazy" alt="Guruvayur Madurai Trichy Temple Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Guruvayur Madurai Pilgrimage');" />
             <span class="package-badge-category">Heritage Pilgrimage</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1081,7 +1085,7 @@
         <!-- Package 8: Kanyakumari Sunrise Tour -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-mysore.png" alt="Kanyakumari Sunrise Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kanyakumari Sunrise Tour');" />
+            <img src="./public/assets/images/dest-mysore.png" width="400" height="250" loading="lazy" alt="Kanyakumari Sunrise Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kanyakumari Sunrise Tour');" />
             <span class="package-badge-category">Southern Coast Special</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1107,7 +1111,7 @@
         <!-- Package 9: Wildlife & Safari Adventure -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-valparai.png" alt="Mudumalai Wayanad Calicut Safari Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Mudumalai Wayanad Safari');" />
+            <img src="./public/assets/images/dest-valparai.png" width="400" height="250" loading="lazy" alt="Mudumalai Wayanad Calicut Safari Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Mudumalai Wayanad Safari');" />
             <span class="package-badge-category">Wildlife & Safari</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1147,7 +1151,7 @@
         <article class="blog-card reveal delay-1">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-ooty.png" 
+              src="./public/assets/images/blog-ooty.png" width="400" height="250" loading="lazy" 
               alt="Coimbatore to Ooty Cab Travel Guide"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Ooty Travel Guide');"
@@ -1175,7 +1179,7 @@
         <article class="blog-card reveal delay-2">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-tips.png" 
+              src="./public/assets/images/blog-tips.png" width="400" height="250" loading="lazy" 
               alt="Coimbatore Airport Taxi Booking"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Airport Taxi Guide');"
@@ -1203,7 +1207,7 @@
         <article class="blog-card reveal delay-3">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/fleet-sedan.png" 
+              src="./public/assets/images/fleet-sedan.png" width="400" height="250" loading="lazy" 
               alt="Oneway Cabs vs Round Trip"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Oneway Cabs Guide');"
@@ -1231,7 +1235,7 @@
         <article class="blog-card reveal delay-4">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-valparai.png" 
+              src="./public/assets/images/blog-valparai.png" width="400" height="250" loading="lazy" 
               alt="Scenic Hill Drives from Coimbatore"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Valparai Hill Drives');"
@@ -1348,6 +1352,8 @@
     </div>
   </section>
 
+  </main>
+
   <!-- Footer -->
   <footer class="site-footer" id="contact">
     <div class="container">
@@ -1363,7 +1369,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Booking Types</h4>
+          <h3>Booking Types</h3>
           <ul>
             <li><a href="#booking-form-section">Local Rides</a></li>
             <li><a href="#booking-form-section">Oneway Cabs</a></li>
@@ -1373,7 +1379,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Popular Routes</h4>
+          <h3>Popular Routes</h3>
           <ul>
             <li><a href="#routes">Coimbatore to Ooty</a></li>
             <li><a href="#routes">Coimbatore to Pollachi</a></li>
@@ -1383,7 +1389,7 @@
         </div>
 
         <div class="footer-col">
-          <h4>Contact Get Cabs</h4>
+          <h3>Contact Get Cabs</h3>
           <p style="margin-bottom:8px;">📍 Gandhipuram & Peelamedu, Coimbatore, TN</p>
           <p style="margin-bottom:8px;">📞 24/7 Hotline: <strong style="color:var(--brand-yellow);">9894020156</strong></p>
           <p style="margin-bottom:8px;">✉️ Email: booking@getcabs.in</p>
@@ -1511,7 +1517,8 @@
       </div>
     </div>
     <div class="chat-footer">
-      <input type="text" class="chat-input" id="chat-user-input" placeholder="Ask fare, route, or cab details..." />
+      <label for="chat-user-input" class="visually-hidden">Ask fare, route, or cab details</label>
+      <input type="text" class="chat-input" id="chat-user-input" aria-label="Ask fare, route, or cab details" placeholder="Ask fare, route, or cab details..." />
       <button class="chat-send-btn" id="chat-send-btn">➤</button>
     </div>
   </div>
