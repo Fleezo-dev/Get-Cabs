@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <h3 style="color:var(--brand-dark); font-size:1.2rem; margin-bottom:10px;">1. Local City Rides (Mini / Sedan Cabs)</h3>
           <p style="line-height:1.7; margin-bottom:10px;">Instant local city rides and point-to-point drop services within Coimbatore with verified local professional drivers.</p>
           <ul style="line-height:1.8; margin-left:20px; margin-bottom:20px;">
-            <li><strong>Guaranteed Standard Rates:</strong> Fixed upfront taxi pricing with zero surge pricing or meter tampering.</li>
+            <li><strong>Standard Transparent Rates:</strong> Fixed upfront taxi pricing with zero surge pricing or meter tampering.</li>
             <li><strong>District Border Outskirts Surcharge:</strong> Outer area trips include a standard adjustment (+₹100 to ₹150) for areas including <em>Karumathampatti, Karanampettai, Paapampatti, Ganeshapuram / Kovilpalayam, Karamadai, Booluvampatti / Pooluvapatti, Ettimadai, Kinathukadavu</em>.</li>
           </ul>
 
@@ -1026,13 +1026,13 @@ document.addEventListener('DOMContentLoaded', function () {
       content: `
         <div class="policy-doc">
           <h2>Coimbatore Oneway Taxi Service</h2>
-          <p>Pay strictly for distance traveled. Zero return charges guaranteed!</p>
+          <p>Pay strictly for distance traveled. Zero Return Fare Policy on all standard one-way routes!</p>
           <div class="policy-highlight-box">
-            🚕 All Oneway fares include vehicle rate, driver batta, and toll estimate with zero hidden extras.
+            🚕 All Oneway fares include vehicle rate and transparent per-KM billing with zero hidden extras.
           </div>
           <div style="margin-top:20px; text-align:center;">
             <p>Use our main page Oneway Fare Calculator for live instant price estimates.</p>
-            <a href="tel:9894020156" class="btn btn-red" style="padding:12px 28px; font-size:1rem; margin-top:10px; display:inline-block;">📞 Call 9894020156 for Instant Oneway Booking</a>
+            <a href="tel:+919894020156" class="btn btn-red" style="padding:12px 28px; font-size:1rem; margin-top:10px; display:inline-block;">📞 Call 9894020156 for Instant Oneway Booking</a>
           </div>
         </div>
       `
@@ -2503,33 +2503,13 @@ document.addEventListener('DOMContentLoaded', function () {
         renderSuggestions(matchedLocal);
 
         debounceTimer = setTimeout(() => {
-          // Query Ola Maps places autocomplete API with fallback
+          // Query server places autocomplete proxy
           fetch(`/api/autocomplete?input=${encodeURIComponent(query)}`)
             .then(res => res.json())
             .then(data => {
               if (data && data.suggestions && data.suggestions.length > 0) {
                 const combined = Array.from(new Set([...matchedLocal, ...data.suggestions]));
                 renderSuggestions(combined);
-              } else {
-                // Direct Ola Maps API client attempt
-                const olaKey = 'l2kC5mBd5G5Nivu3wcw6GmV2OO1bLUPGkDA0ZeCK';
-                fetch(`https://api.olamaps.io/places/v1/autocomplete?input=${encodeURIComponent(query)}&api_key=${olaKey}`)
-                  .then(r => r.json())
-                  .then(olaData => {
-                    if (olaData && olaData.predictions && olaData.predictions.length > 0) {
-                      const olaNames = olaData.predictions.map(p => {
-                        if (p.structured_formatting) {
-                          const m = p.structured_formatting.main_text || '';
-                          const s = p.structured_formatting.secondary_text || '';
-                          return s ? `${m}, ${s}` : m;
-                        }
-                        return p.description || '';
-                      }).filter(Boolean);
-                      const combined = Array.from(new Set([...matchedLocal, ...olaNames]));
-                      renderSuggestions(combined);
-                    }
-                  })
-                  .catch(() => {});
               }
             })
             .catch(() => {});
