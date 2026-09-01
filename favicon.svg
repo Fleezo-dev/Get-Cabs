@@ -1,0 +1,37 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D90429" />
+      <stop offset="100%" stop-color="#8D0018" />
+    </linearGradient>
+    <filter id="drop_shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <!-- Background with subtle corner radius (standard for app icon & search snippet) -->
+  <rect width="512" height="512" rx="104" fill="url(#brand_grad)" />
+  
+  <!-- Speed Arc -->
+  <path d="M 80 215 C 80 140 140 80 215 80" stroke="#FFB703" stroke-width="24" stroke-linecap="round" />
+  
+  <!-- TAXI Roof Sign -->
+  <rect x="216" y="125" width="80" height="46" rx="14" fill="#FFB703" filter="url(#drop_shadow)" />
+  <rect x="226" y="135" width="60" height="26" rx="8" fill="#111827" />
+
+  <!-- Cab Top / Roof Structure -->
+  <path d="M155 280 L190 195 C196 180 210 170 228 170 H284 C302 170 316 180 322 195 L357 280 Z" fill="#FFC837" />
+
+  <!-- Cab Windshield Glass -->
+  <path d="M174 265 L202 205 C206 197 214 192 223 192 H289 C298 192 306 197 310 205 L338 265 Z" fill="#111827" />
+
+  <!-- Cab Lower Body -->
+  <path d="M112 315 C112 295 128 280 148 280 H364 C384 280 400 295 400 315 V348 C400 358 392 368 382 368 H130 C120 368 112 358 112 348 Z" fill="#FFB703" filter="url(#drop_shadow)" />
+
+  <!-- Headlights -->
+  <circle cx="145" cy="324" r="18" fill="#FFFFFF" />
+  <circle cx="367" cy="324" r="18" fill="#FFFFFF" />
+
+  <!-- Grill / Bumper Accent -->
+  <rect x="196" y="318" width="120" height="22" rx="10" fill="#111827" />
+  <rect x="210" y="324" width="92" height="10" rx="5" fill="#FFC837" />
+</svg>

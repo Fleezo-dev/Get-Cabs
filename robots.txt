@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
 
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /favicon*
+Allow: /*.png$
+Allow: /*.svg$
+Allow: /*.ico$
+
 Sitemap: https://www.getcabs.in/sitemap.xml

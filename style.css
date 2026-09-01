@@ -2601,7 +2601,7 @@ body {
 
 /* Taxi Comparison Section */
 .comparison-section {
-  padding: 60px 0;
+  padding: 70px 0;
   background: #ffffff;
   border-top: 1px solid #e5e7eb;
   border-bottom: 1px solid #e5e7eb;
@@ -2739,7 +2739,6 @@ body {
   .comparison-card {
     padding: 16px 12px;
     margin-top: 20px;
-    border-radius: 12px;
   }
   .comparison-table {
     min-width: 520px;
@@ -2752,9 +2751,8 @@ body {
   .comparison-cta-box {
     flex-direction: column;
     text-align: center;
-    padding: 18px 14px;
-    gap: 14px;
-    align-items: center;
+    padding: 20px 16px;
+    gap: 16px;
   }
   .comparison-cta-box .btn {
     width: 100%;
