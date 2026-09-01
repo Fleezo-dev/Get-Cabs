@@ -372,13 +372,10 @@ img {
 .hero-booking-section {
   position: relative;
   overflow: hidden;
-  background-color: #0f172a;
-  background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.70) 0%, rgba(15, 23, 42, 0.58) 50%, rgba(15, 23, 42, 0.85) 100%), url('./public/assets/images/dest-ooty.webp');
-  background-size: cover;
-  background-position: center center;
-  background-repeat: no-repeat;
+  background-color: #1A1A1A;
   color: #ffffff;
   padding: 44px 0 64px 0;
+  min-height: 480px;
 }
 
 .hero-booking-section .container {
@@ -389,6 +386,7 @@ img {
 .hero-header-text {
   text-align: center;
   margin-bottom: 24px;
+  min-height: 120px;
 }
 
 .hero-header-text h1 {
@@ -419,6 +417,7 @@ img {
   border: 3px solid var(--brand-yellow);
   max-width: 1100px;
   margin: 0 auto;
+  min-height: 250px;
 }
 
 /* Booking Tabs: Local Rides, Oneway, Outstation, Hourly Package */
