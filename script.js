@@ -83,12 +83,253 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // 3. Get Cabs Coimbatore Fare & Rate Calculation Engine
-  // Pricing Rules specified by company (Effective 01/06/2026):
-  // 1. Local Rides (Mini/Sedan): Base fare ₹150 for first 2.5 KM; ₹30/KM for subsequent KM.
-  // 2. Hourly Package: Min 1 Hour ₹325 (Running KM ₹20-25/KM); 10 Hrs / 100 KM Day Rental ₹3,000 (Extra KM ₹10, Extra Hr ₹150); 12 Hrs / 100 KM Day Rental ₹3,500.
-  // 3. Oneway Drop Rates: Fixed rates for popular destinations from Gandhipuram, Ukkadam, Railway Station, Airport.
-  // 4. Distance Based: Under 100 KM drop @ ₹17/KM round trip; Over 130 KM drop @ ₹14/KM round trip + ₹400 Batta.
+  // 3. Get Cabs Coimbatore Comprehensive Fare & Distance Engine
+  // Complete Location database with precise GPS coordinates for Coimbatore
+  const COVAI_LOCALITIES = {
+    // Hotels & Commercial Landmarks
+    'park elanza': { lat: 11.0155, lng: 76.9635, name: 'Park Elanza, Ram Nagar' },
+    'hotel park elanza': { lat: 11.0155, lng: 76.9635, name: 'Park Elanza' },
+    'residency towers': { lat: 11.0100, lng: 76.9800, name: 'The Residency Towers, Avinashi Rd' },
+    'the residency': { lat: 11.0100, lng: 76.9800, name: 'The Residency Towers' },
+    'le meridien': { lat: 11.0620, lng: 77.0850, name: 'Le Meridien, Neelambur' },
+    'vivanta': { lat: 11.0080, lng: 76.9750, name: 'Vivanta Coimbatore, Race Course' },
+    'taj vivanta': { lat: 11.0080, lng: 76.9750, name: 'Vivanta Coimbatore' },
+    'radisson blu': { lat: 11.0030, lng: 77.0010, name: 'Radisson Blu, Peelamedu' },
+    'zone by the park': { lat: 11.0200, lng: 76.9780, name: 'Zone by The Park, Avinashi Rd' },
+    'gokulam park': { lat: 11.0610, lng: 77.0780, name: 'Gokulam Park, Neelambur' },
+    'aloft': { lat: 11.0360, lng: 77.0320, name: 'Aloft Coimbatore, Singanallur' },
+    'ibis': { lat: 11.0100, lng: 76.9850, name: 'Ibis Hotel, Lakshmi Mills' },
+    'city tower': { lat: 11.0160, lng: 76.9650, name: 'Hotel City Tower, Gandhipuram' },
+    'kiscol grands': { lat: 11.0250, lng: 76.9550, name: 'Kiscol Grands, Tatabad' },
+    'brookefields': { lat: 11.0080, lng: 76.9575, name: 'Brookefields Mall' },
+    'brooke fields': { lat: 11.0080, lng: 76.9575, name: 'Brookefields Mall' },
+    'prozone mall': { lat: 11.0540, lng: 76.9920, name: 'Prozone Mall, Saravanampatti' },
+    'prozone': { lat: 11.0540, lng: 76.9920, name: 'Prozone Mall' },
+    'fun republic': { lat: 11.0260, lng: 77.0020, name: 'Fun Republic Mall, Peelamedu' },
+    'fun mall': { lat: 11.0260, lng: 77.0020, name: 'Fun Republic Mall' },
+    'broadway': { lat: 11.0400, lng: 77.0500, name: 'Broadway Cinemas, KMCH' },
+
+    // Roads & Streets
+    'dr nanjappa rd': { lat: 11.0150, lng: 76.9650, name: 'Dr Nanjappa Road' },
+    'nanjappa road': { lat: 11.0150, lng: 76.9650, name: 'Dr Nanjappa Road' },
+    'nanjappa rd': { lat: 11.0150, lng: 76.9650, name: 'Dr Nanjappa Road' },
+    'nanjappa': { lat: 11.0150, lng: 76.9650, name: 'Dr Nanjappa Road' },
+    'sastri rd': { lat: 11.0175, lng: 76.9640, name: 'Sastri Road, Ram Nagar' },
+    'sastri road': { lat: 11.0175, lng: 76.9640, name: 'Sastri Road, Ram Nagar' },
+    'shastri rd': { lat: 11.0175, lng: 76.9640, name: 'Sastri Road' },
+    'cross cut rd': { lat: 11.0195, lng: 76.9645, name: 'Cross Cut Road, Gandhipuram' },
+    'cross cut road': { lat: 11.0195, lng: 76.9645, name: 'Cross Cut Road' },
+    'crosscut': { lat: 11.0195, lng: 76.9645, name: 'Cross Cut Road' },
+    '100 feet rd': { lat: 11.0220, lng: 76.9630, name: '100 Feet Road, Gandhipuram' },
+    '100 feet road': { lat: 11.0220, lng: 76.9630, name: '100 Feet Road' },
+    '100ft road': { lat: 11.0220, lng: 76.9630, name: '100 Feet Road' },
+    '100ft': { lat: 11.0220, lng: 76.9630, name: '100 Feet Road' },
+    'db road': { lat: 11.0120, lng: 76.9470, name: 'DB Road, RS Puram' },
+    'diwan bahadur': { lat: 11.0120, lng: 76.9470, name: 'DB Road, RS Puram' },
+    'tv swamy rd': { lat: 11.0150, lng: 76.9450, name: 'TV Swamy Road, RS Puram' },
+    'tv swamy road': { lat: 11.0150, lng: 76.9450, name: 'TV Swamy Road' },
+    'nsr road': { lat: 11.0290, lng: 76.9430, name: 'NSR Road, Saibaba Colony' },
+    'nsr rd': { lat: 11.0290, lng: 76.9430, name: 'NSR Road' },
+    'race course': { lat: 11.0060, lng: 76.9740, name: 'Race Course' },
+    'racecourse': { lat: 11.0060, lng: 76.9740, name: 'Race Course' },
+    'avinashi road': { lat: 11.0250, lng: 77.0100, name: 'Avinashi Road' },
+    'avinashi rd': { lat: 11.0250, lng: 77.0100, name: 'Avinashi Road' },
+    'trichy road': { lat: 11.0010, lng: 77.0100, name: 'Trichy Road' },
+    'trichy rd': { lat: 11.0010, lng: 77.0100, name: 'Trichy Road' },
+    'sathy road': { lat: 11.0450, lng: 76.9800, name: 'Sathyamangalam Road' },
+    'sathyamangalam road': { lat: 11.0450, lng: 76.9800, name: 'Sathyamangalam Road' },
+    'mettupalayam road': { lat: 11.0450, lng: 76.9420, name: 'Mettupalayam Road' },
+    'mtp road': { lat: 11.0450, lng: 76.9420, name: 'Mettupalayam Road' },
+    'palakkad road': { lat: 10.9600, lng: 76.9400, name: 'Palakkad Road' },
+    'pollachi road': { lat: 10.9200, lng: 76.9700, name: 'Pollachi Road' },
+    'marudhamalai road': { lat: 11.0300, lng: 76.8800, name: 'Marudhamalai Road' },
+    'siruvani road': { lat: 10.9800, lng: 76.8500, name: 'Siruvani Road' },
+    'thadagam road': { lat: 11.0400, lng: 76.9100, name: 'Thadagam Road' },
+    'perur main road': { lat: 10.9800, lng: 76.9300, name: 'Perur Main Road' },
+
+    // Transit Hubs & Bus Stands
+    'central bus stand': { lat: 11.0178, lng: 76.9670, name: 'Gandhipuram Central Bus Stand' },
+    'gandhipuram bus stand': { lat: 11.0178, lng: 76.9670, name: 'Gandhipuram Bus Stand' },
+    'omni bus stand': { lat: 11.0210, lng: 76.9680, name: 'Omni Bus Stand, Gandhipuram' },
+    'omni bus': { lat: 11.0210, lng: 76.9680, name: 'Omni Bus Stand' },
+    'setc bus stand': { lat: 11.0170, lng: 76.9665, name: 'SETC Bus Stand, Gandhipuram' },
+    'setc': { lat: 11.0170, lng: 76.9665, name: 'SETC Bus Stand' },
+    'singanallur bus stand': { lat: 10.9996, lng: 77.0270, name: 'Singanallur Bus Stand' },
+    'ukkadam bus stand': { lat: 10.9890, lng: 76.9600, name: 'Ukkadam Bus Stand' },
+    'saibaba colony bus stand': { lat: 11.0320, lng: 76.9430, name: 'MTP Road New Bus Stand' },
+    'railway station': { lat: 10.9980, lng: 76.9628, name: 'Coimbatore Junction Railway Station' },
+    'coimbatore junction': { lat: 10.9980, lng: 76.9628, name: 'Coimbatore Junction' },
+    'cbe junction': { lat: 10.9980, lng: 76.9628, name: 'Coimbatore Junction' },
+    'junction': { lat: 10.9980, lng: 76.9628, name: 'Coimbatore Junction' },
+    'station': { lat: 10.9980, lng: 76.9628, name: 'Coimbatore Railway Station' },
+    'north railway station': { lat: 11.0210, lng: 76.9540, name: 'Coimbatore North Railway Station' },
+    'coimbatore north': { lat: 11.0210, lng: 76.9540, name: 'Coimbatore North' },
+    'podanur junction': { lat: 10.9650, lng: 76.9950, name: 'Podanur Junction' },
+    'podanur railway station': { lat: 10.9650, lng: 76.9950, name: 'Podanur Railway Station' },
+    'peelamedu railway station': { lat: 11.0310, lng: 77.0150, name: 'Peelamedu Railway Station' },
+    'irugur railway station': { lat: 11.0180, lng: 77.0760, name: 'Irugur Railway Station' },
+    'airport': { lat: 11.0298, lng: 77.0434, name: 'Coimbatore International Airport (CJB)' },
+    'coimbatore airport': { lat: 11.0298, lng: 77.0434, name: 'Coimbatore Airport (CJB)' },
+    'cjb': { lat: 11.0298, lng: 77.0434, name: 'Coimbatore Airport (CJB)' },
+    'aerodrome': { lat: 11.0330, lng: 77.0350, name: 'Civil Aerodrome Post' },
+
+    // Hospitals & IT / Tech Parks
+    'kmch': { lat: 11.0500, lng: 77.0600, name: 'KMCH Hospital, Avinashi Rd' },
+    'kovai medical center': { lat: 11.0500, lng: 77.0600, name: 'KMCH Hospital' },
+    'psg hospital': { lat: 11.0250, lng: 77.0120, name: 'PSG IMS & Hospital, Peelamedu' },
+    'psg ims': { lat: 11.0250, lng: 77.0120, name: 'PSG IMS & Hospital' },
+    'ganga hospital': { lat: 11.0310, lng: 76.9480, name: 'Ganga Hospital, Saibaba Colony' },
+    'ramakrishna hospital': { lat: 11.0210, lng: 76.9830, name: 'Sri Ramakrishna Hospital, Sidhapudur' },
+    'gknm hospital': { lat: 11.0090, lng: 76.9780, name: 'GKNM Hospital, Pappanaickenpalayam' },
+    'cmch': { lat: 10.9990, lng: 76.9690, name: 'Coimbatore Medical College Hospital' },
+    'royal care': { lat: 11.0650, lng: 77.0800, name: 'Royal Care Hospital, Neelambur' },
+    'tidel park': { lat: 11.0330, lng: 77.0300, name: 'Tidel Park ELCOT, Peelamedu' },
+    'tidel': { lat: 11.0330, lng: 77.0300, name: 'Tidel Park' },
+    'codissia': { lat: 11.0400, lng: 77.0350, name: 'CODISSIA Trade Fair Complex' },
+    'chil sez': { lat: 11.0860, lng: 76.9990, name: 'CHIL SEZ IT Park, Saravanampatti' },
+    'kgisl': { lat: 11.0840, lng: 76.9970, name: 'KGISL IT Park, Saravanampatti' },
+    'psg tech': { lat: 11.0240, lng: 77.0030, name: 'PSG College of Technology, Peelamedu' },
+    'psg': { lat: 11.0240, lng: 77.0030, name: 'PSG Tech, Peelamedu' },
+    'cit': { lat: 11.0270, lng: 77.0280, name: 'CIT, Civil Aerodrome' },
+    'kumaraguru': { lat: 11.0820, lng: 76.9880, name: 'Kumaraguru College (KCT)' },
+    'kct': { lat: 11.0820, lng: 76.9880, name: 'Kumaraguru College' },
+    'amrita university': { lat: 10.9010, lng: 76.9000, name: 'Amrita Vishwa Vidyapeetham, Ettimadai' },
+    'amrita': { lat: 10.9010, lng: 76.9000, name: 'Amrita University, Ettimadai' },
+    'bharathiar university': { lat: 11.0380, lng: 76.8790, name: 'Bharathiar University' },
+    'bharathiar': { lat: 11.0380, lng: 76.8790, name: 'Bharathiar University' },
+    'karunya university': { lat: 10.9380, lng: 76.7450, name: 'Karunya University' },
+    'karunya': { lat: 10.9380, lng: 76.7450, name: 'Karunya University' },
+    'tnau': { lat: 11.0130, lng: 76.9320, name: 'TNAU Tamil Nadu Agricultural University' },
+
+    // Areas, Neighborhoods & Localities
+    'ram nagar': { lat: 11.0160, lng: 76.9620, name: 'Ram Nagar' },
+    'ramnagar': { lat: 11.0160, lng: 76.9620, name: 'Ram Nagar' },
+    'gandhipuram': { lat: 11.0168, lng: 76.9676, name: 'Gandhipuram' },
+    'tatabad': { lat: 11.0220, lng: 76.9580, name: 'Tatabad' },
+    'sivananda colony': { lat: 11.0330, lng: 76.9520, name: 'Sivananda Colony' },
+    'sivanandha colony': { lat: 11.0330, lng: 76.9520, name: 'Sivananda Colony' },
+    'saibaba colony': { lat: 11.0280, lng: 76.9460, name: 'Saibaba Colony' },
+    'saibaba': { lat: 11.0280, lng: 76.9460, name: 'Saibaba Colony' },
+    'rs puram': { lat: 11.0118, lng: 76.9450, name: 'RS Puram' },
+    'r.s. puram': { lat: 11.0118, lng: 76.9450, name: 'RS Puram' },
+    'townhall': { lat: 10.9940, lng: 76.9610, name: 'Town Hall' },
+    'town hall': { lat: 10.9940, lng: 76.9610, name: 'Town Hall' },
+    'oppanakara': { lat: 10.9940, lng: 76.9610, name: 'Oppanakara Street, Town Hall' },
+    'peelamedu': { lat: 11.0264, lng: 77.0093, name: 'Peelamedu' },
+    'hopes college': { lat: 11.0250, lng: 77.0180, name: 'Hopes College' },
+    'hopes': { lat: 11.0250, lng: 77.0180, name: 'Hopes College' },
+    'nava india': { lat: 11.0230, lng: 76.9950, name: 'Nava India' },
+    'lakshmi mills': { lat: 11.0180, lng: 76.9850, name: 'Lakshmi Mills' },
+    'ramanathapuram': { lat: 11.0020, lng: 76.9850, name: 'Ramanathapuram' },
+    'sungam': { lat: 11.0010, lng: 76.9750, name: 'Sungam' },
+    'red fields': { lat: 11.0080, lng: 76.9820, name: 'Red Fields' },
+    'puliyakulam': { lat: 11.0080, lng: 76.9900, name: 'Puliyakulam' },
+    'puliakulam': { lat: 11.0080, lng: 76.9900, name: 'Puliyakulam' },
+    'singanallur': { lat: 10.9996, lng: 77.0270, name: 'Singanallur' },
+    'ondipudur': { lat: 11.0020, lng: 77.0540, name: 'Ondipudur' },
+    'irugur': { lat: 11.0180, lng: 77.0760, name: 'Irugur' },
+    'sulur': { lat: 11.0240, lng: 77.1260, name: 'Sulur' },
+    'ganapathy': { lat: 11.0375, lng: 76.9740, name: 'Ganapathy' },
+    'avarampalayam': { lat: 11.0310, lng: 76.9820, name: 'Avarampalayam' },
+    'sidhapudur': { lat: 11.0200, lng: 76.9750, name: 'Sidhapudur' },
+    'siddhapudur': { lat: 11.0200, lng: 76.9750, name: 'Sidhapudur' },
+    'saravanampatti': { lat: 11.0805, lng: 76.9946, name: 'Saravanampatti' },
+    'saravanampatty': { lat: 11.0805, lng: 76.9946, name: 'Saravanampatti' },
+    'kalapatti': { lat: 11.0710, lng: 77.0370, name: 'Kalapatti' },
+    'chinniyampalayam': { lat: 11.0380, lng: 77.0700, name: 'Chinniyampalayam' },
+    'sitra': { lat: 11.0350, lng: 77.0500, name: 'SITRA, Airport Rd' },
+    'goldwins': { lat: 11.0450, lng: 77.0580, name: 'Goldwins' },
+    'neelambur': { lat: 11.0600, lng: 77.0950, name: 'Neelambur' },
+    'karumathampatti': { lat: 11.1090, lng: 77.1780, name: 'Karumathampatti' },
+    'vilankurichi': { lat: 11.0560, lng: 77.0120, name: 'Vilankurichi' },
+    'koundampalayam': { lat: 11.0450, lng: 76.9380, name: 'Koundampalayam' },
+    'kavundampalayam': { lat: 11.0450, lng: 76.9380, name: 'Koundampalayam' },
+    'edayarpalayam': { lat: 11.0380, lng: 76.9200, name: 'Edayarpalayam' },
+    'thudiyalur': { lat: 11.0772, lng: 76.9380, name: 'Thudiyalur' },
+    'gn mills': { lat: 11.0620, lng: 76.9400, name: 'GN Mills' },
+    'periyanaickenpalayam': { lat: 11.1450, lng: 76.9350, name: 'Periyanaickenpalayam' },
+    'pns': { lat: 11.1450, lng: 76.9350, name: 'Periyanaickenpalayam' },
+    'narasimhanaickenpalayam': { lat: 11.1120, lng: 76.9400, name: 'Narasimhanaickenpalayam' },
+    'karamadai': { lat: 11.2420, lng: 76.9580, name: 'Karamadai' },
+    'mettupalayam': { lat: 11.3000, lng: 76.9400, name: 'Mettupalayam (MTP)' },
+    'mtp': { lat: 11.3000, lng: 76.9400, name: 'Mettupalayam' },
+    'sirumugai': { lat: 11.3200, lng: 77.0030, name: 'Sirumugai' },
+    'annur': { lat: 11.2330, lng: 77.1330, name: 'Annur' },
+    'kovilpalayam': { lat: 11.1390, lng: 77.0420, name: 'Kovilpalayam' },
+    'vadavalli': { lat: 11.0245, lng: 76.9056, name: 'Vadavalli' },
+    'pn pudur': { lat: 11.0180, lng: 76.9200, name: 'PN Pudur' },
+    'marudhamalai': { lat: 11.0460, lng: 76.8520, name: 'Marudhamalai Temple' },
+    'thadagam': { lat: 11.0650, lng: 76.8650, name: 'Thadagam' },
+    'anaikatti': { lat: 11.1050, lng: 76.7720, name: 'Anaikatti' },
+    'perur': { lat: 10.9710, lng: 76.9150, name: 'Perur Pateeswarar Temple' },
+    'selvapuram': { lat: 10.9920, lng: 76.9380, name: 'Selvapuram' },
+    'telungupalayam': { lat: 10.9980, lng: 76.9280, name: 'Telungupalayam' },
+    'sukrawarpet': { lat: 11.0020, lng: 76.9550, name: 'Sukrawarpet' },
+    'ukkadam': { lat: 10.9890, lng: 76.9600, name: 'Ukkadam' },
+    'kuniyamuthur': { lat: 10.9575, lng: 76.9535, name: 'Kuniyamuthur' },
+    'kovaipudur': { lat: 10.9385, lng: 76.9380, name: 'Kovaipudur' },
+    'sundarapuram': { lat: 10.9520, lng: 76.9800, name: 'Sundarapuram' },
+    'kurichi': { lat: 10.9500, lng: 76.9700, name: 'Kurichi' },
+    'podanur': { lat: 10.9650, lng: 76.9950, name: 'Podanur' },
+    'eachanari': { lat: 10.9230, lng: 76.9670, name: 'Eachanari Temple' },
+    'madukkarai': { lat: 10.9020, lng: 76.9600, name: 'Madukkarai' },
+    'malumichampatti': { lat: 10.8950, lng: 76.9880, name: 'Malumichampatti' },
+    'othakkalmandapam': { lat: 10.8650, lng: 76.9920, name: 'Othakkalmandapam' },
+    'kinathukadavu': { lat: 10.8220, lng: 77.0190, name: 'Kinathukadavu' },
+    'pollachi': { lat: 10.6600, lng: 77.0050, name: 'Pollachi' },
+    'ettimadai': { lat: 10.9010, lng: 76.9000, name: 'Ettimadai' },
+    'alandurai': { lat: 10.9500, lng: 76.7800, name: 'Alandurai' },
+    'pooluvapatti': { lat: 10.9500, lng: 76.7800, name: 'Pooluvapatti' },
+    'booluvampatti': { lat: 10.9500, lng: 76.7800, name: 'Booluvampatti' },
+    'isha yoga center': { lat: 10.9760, lng: 76.7360, name: 'Isha Yoga Center' },
+    'isha yoga': { lat: 10.9760, lng: 76.7360, name: 'Isha Yoga Center' },
+    'adiyogi': { lat: 10.9760, lng: 76.7360, name: 'Adiyogi 112ft Shiva' },
+    'dhyanalinga': { lat: 10.9760, lng: 76.7360, name: 'Dhyanalinga Temple' },
+    'isha': { lat: 10.9760, lng: 76.7360, name: 'Isha Yoga Center' },
+    'kovai kutralam': { lat: 10.9400, lng: 76.7100, name: 'Kovai Kutralam Falls' },
+    'palladam': { lat: 10.9980, lng: 77.2900, name: 'Palladam' },
+    'tiruppur': { lat: 11.1085, lng: 77.3411, name: 'Tiruppur' },
+    'tirupur': { lat: 11.1085, lng: 77.3411, name: 'Tiruppur' }
+  };
+
+  // Pre-sort locality keys descending by length so longest, most specific phrases match first
+  const SORTED_LOCALITY_KEYS = Object.keys(COVAI_LOCALITIES).sort((a, b) => b.length - a.length);
+
+  // Outstation one-way distances from Coimbatore in KM
+  const OUTSTATION_DISTANCES = {
+    'ooty': { onewayKm: 87, roundTripKm: 220, isHills: true, fixedOneway: 3500 },
+    'coonoor': { onewayKm: 70, roundTripKm: 200, isHills: true, fixedOneway: 2900 },
+    'kotagiri': { onewayKm: 70, roundTripKm: 200, isHills: true, fixedOneway: 2900 },
+    'munnar': { onewayKm: 160, roundTripKm: 350, isHills: true, fixedOneway: 3800 },
+    'kodaikanal': { onewayKm: 175, roundTripKm: 380, isHills: true, fixedOneway: 4200 },
+    'kodai': { onewayKm: 175, roundTripKm: 380, isHills: true, fixedOneway: 4200 },
+    'valparai': { onewayKm: 105, roundTripKm: 250, isHills: true, fixedOneway: 3200 },
+    'yercaud': { onewayKm: 195, roundTripKm: 420, isHills: true, fixedOneway: 4800 },
+    'wayanad': { onewayKm: 140, roundTripKm: 320, isHills: true, fixedOneway: 5500 },
+    'palani': { onewayKm: 110, roundTripKm: 250, isHills: false, fixedOneway: 3900 },
+    'tiruppur': { onewayKm: 55, roundTripKm: 250, isHills: false, fixedOneway: 1900 },
+    'tirupur': { onewayKm: 55, roundTripKm: 250, isHills: false, fixedOneway: 1900 },
+    'erode': { onewayKm: 100, roundTripKm: 250, isHills: false, fixedOneway: 3500 },
+    'salem': { onewayKm: 165, roundTripKm: 340, isHills: false, fixedOneway: 3799 },
+    'madurai': { onewayKm: 215, roundTripKm: 450, isHills: false, fixedOneway: 4499 },
+    'bangalore': { onewayKm: 360, roundTripKm: 750, isHills: false, fixedOneway: 7499 },
+    'bengaluru': { onewayKm: 360, roundTripKm: 750, isHills: false, fixedOneway: 7499 },
+    'mysore': { onewayKm: 200, roundTripKm: 420, isHills: false, fixedOneway: 5499 },
+    'mysuru': { onewayKm: 200, roundTripKm: 420, isHills: false, fixedOneway: 5499 },
+    'chennai': { onewayKm: 500, roundTripKm: 1050, isHills: false, fixedOneway: 11500 },
+    'trichy': { onewayKm: 215, roundTripKm: 450, isHills: false, fixedOneway: 4800 },
+    'guruvayur': { onewayKm: 140, roundTripKm: 300, isHills: false, fixedOneway: 3800 },
+    'palakkad': { onewayKm: 52, roundTripKm: 250, isHills: false, fixedOneway: 1900 },
+    'sathyamangalam': { onewayKm: 70, roundTripKm: 250, isHills: false, fixedOneway: 2500 },
+    'kangeyam': { onewayKm: 70, roundTripKm: 250, isHills: false, fixedOneway: 2500 },
+    'udumalpet': { onewayKm: 70, roundTripKm: 250, isHills: false, fixedOneway: 2500 },
+    'perundurai': { onewayKm: 80, roundTripKm: 250, isHills: false, fixedOneway: 2900 },
+    'gobi': { onewayKm: 83, roundTripKm: 250, isHills: false, fixedOneway: 2900 },
+    'dharapuram': { onewayKm: 85, roundTripKm: 250, isHills: false, fixedOneway: 2950 },
+    'kanyakumari': { onewayKm: 440, roundTripKm: 900, isHills: false, fixedOneway: 10500 },
+    'rameshwaram': { onewayKm: 380, roundTripKm: 800, isHills: false, fixedOneway: 9200 },
+    'thanjavur': { onewayKm: 260, roundTripKm: 540, isHills: false, fixedOneway: 6200 }
+  };
 
   const HILL_STATIONS = [
     'ooty', 'coonoor', 'munnar', 'kodaikanal', 'kodai', 'valparai',
@@ -99,6 +340,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const FIXED_ONEWAY_RATES = {
     'annur': 1100,
     'isha': 1100,
+    'adiyogi': 1100,
     'anaikatti': 1300,
     'mettupalayam': 1400,
     'palladam': 1500,
@@ -122,17 +364,55 @@ document.addEventListener('DOMContentLoaded', function () {
     'coonoor': 2900,
     'erode': 3500,
     'ooty': 3500,
-    'palani': 3900
+    'palani': 3900,
+    'valparai': 3200,
+    'munnar': 3800,
+    'kodaikanal': 4200,
+    'yercaud': 4800,
+    'bangalore': 7499,
+    'mysore': 5499
   };
+
+  // Haversine formula to compute great-circle distance between two GPS coordinates
+  function haversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth radius in KM
+    const dLat = (lat2 - lat1) * (Math.PI / 180);
+    const dLon = (lon2 - lon1) * (Math.PI / 180);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // Find locality coordinate match using longest matching keyword first
+  function findLocality(query = '') {
+    let q = String(query).toLowerCase().trim();
+    if (!q) return null;
+
+    // Clean address tokens (strip pincodes, "coimbatore", "tamil nadu", etc. unless that's all there is)
+    const cleaned = q.replace(/,\s*coimbatore/gi, '')
+                     .replace(/,\s*tamil\s*nadu/gi, '')
+                     .replace(/641\d{3}/g, '')
+                     .replace(/[,\.-]/g, ' ')
+                     .replace(/\s+/g, ' ')
+                     .trim();
+
+    const searchTarget = cleaned || q;
+
+    for (let i = 0; i < SORTED_LOCALITY_KEYS.length; i++) {
+      const key = SORTED_LOCALITY_KEYS[i];
+      if (searchTarget.includes(key) || q.includes(key)) {
+        return COVAI_LOCALITIES[key];
+      }
+    }
+    return null;
+  }
 
   function isHillStation(text1 = '', text2 = '') {
     const combined = (String(text1) + ' ' + String(text2)).toLowerCase();
     return HILL_STATIONS.some(kw => combined.includes(kw));
-  }
-
-  function isOotyRoute(text1 = '', text2 = '') {
-    const combined = (String(text1) + ' ' + String(text2)).toLowerCase();
-    return combined.includes('ooty');
   }
 
   function formatPriceRange(exactPrice) {
@@ -140,78 +420,195 @@ document.addEventListener('DOMContentLoaded', function () {
     return `₹${exact.toLocaleString('en-IN')}`;
   }
 
-  function calculateLocalFare(km, pickup = '', drop = '') {
-    const dist = Math.max(0, parseFloat(km) || 0);
-    let fare = 75 + (dist * 28);
-    const combined = (String(pickup) + ' ' + String(drop)).toLowerCase();
-    const borderOutskirts = [
-      'karumathampatti', 'karanampettai', 'paapampatti', 'ganeshapuram',
-      'kovilpalayam', 'karamadai', 'booluvampatti', 'pooluvapatti',
-      'ettimadai', 'kinathukadavu'
-    ];
-    if (borderOutskirts.some(loc => combined.includes(loc))) {
-      fare += 100;
-    }
-    return Math.round(fare);
-  }
-
-  function calculateOnewayFare(km, destName = '', pickupName = '') {
-    const normDrop = String(destName).toLowerCase().trim();
-    const normPickup = String(pickupName).toLowerCase().trim();
-    
-    // Check fixed tariff dictionary match
-    for (let key in FIXED_ONEWAY_RATES) {
-      if (normDrop.includes(key) || normPickup.includes(key)) {
-        return FIXED_ONEWAY_RATES[key];
-      }
-    }
-
-    const dist = Math.max(0, parseFloat(km) || 0);
-    if (dist <= 100) {
-      return dist * 2 * 17;
-    } else {
-      return (dist * 2 * 14) + 400;
-    }
-  }
-
-  function calculateOutstationFare(roundTripKm, isHills) {
-    const dist = Math.max(0, parseFloat(roundTripKm) || 0);
-    if (dist <= 200) {
-      return dist * 17;
-    } else {
-      return (dist * 14) + 400;
-    }
-  }
-
-  function calculateHourlyFare(hours) {
-    const hrs = parseInt(hours, 10) || 1;
-    if (hrs >= 12) return 3500;
-    if (hrs >= 10) return 3000;
-    return hrs * 350;
-  }
-
+  // 1. Dynamic Local Distance Estimation
   function estimateLocalDistance(pickup = '', drop = '') {
     const p = String(pickup).toLowerCase().trim();
     const d = String(drop).toLowerCase().trim();
     if (!p || !d) return 0;
-    
-    // Specific location pair distances in Kovai (in KM)
-    if ((p.includes('airport') && d.includes('railway')) || (p.includes('railway') && d.includes('airport'))) return 11;
-    if ((p.includes('airport') && d.includes('gandhipuram')) || (p.includes('gandhipuram') && d.includes('airport'))) return 10;
-    if ((p.includes('airport') && d.includes('rs puram')) || (p.includes('rs puram') && d.includes('airport'))) return 13;
-    if ((p.includes('airport') && d.includes('saravanampatti')) || (p.includes('saravanampatti') && d.includes('airport'))) return 12;
-    if ((p.includes('airport') && d.includes('peelamedu')) || (p.includes('peelamedu') && d.includes('airport'))) return 5;
-    if ((p.includes('gandhipuram') && d.includes('rs puram')) || (p.includes('rs puram') && d.includes('gandhipuram'))) return 4;
-    if ((p.includes('gandhipuram') && d.includes('peelamedu')) || (p.includes('peelamedu') && d.includes('gandhipuram'))) return 6;
-    if ((p.includes('gandhipuram') && d.includes('saravanampatti')) || (p.includes('saravanampatti') && d.includes('gandhipuram'))) return 9;
-    if ((p.includes('gandhipuram') && d.includes('ukkadam')) || (p.includes('ukkadam') && d.includes('gandhipuram'))) return 4;
-    if ((p.includes('gandhipuram') && d.includes('singanallur')) || (p.includes('singanallur') && d.includes('gandhipuram'))) return 8;
-    if ((p.includes('isha') || p.includes('adiyogi')) || (d.includes('isha') || d.includes('adiyogi'))) return 33;
-    if (p.includes('marudhamalai') || d.includes('marudhamalai')) return 15;
-    if (p.includes('mettupalayam') || d.includes('mettupalayam')) return 37;
-    
-    // Default estimate when both pickup and dropoff are entered
-    return 8;
+
+    const loc1 = findLocality(p);
+    const loc2 = findLocality(d);
+
+    if (loc1 && loc2) {
+      const straightDist = haversineDistance(loc1.lat, loc1.lng, loc2.lat, loc2.lng);
+      // Same spot / same neighborhood (e.g. Park Elanza to Ram Nagar / Bus Stand)
+      if (straightDist < 0.8) {
+        return 1.1;
+      }
+      // Direct distance * 1.35 (city road winding curvature factor)
+      const roadDist = straightDist * 1.35;
+      return Math.round(roadDist * 10) / 10;
+    }
+
+    if (loc1 || loc2) {
+      // Known point to an arbitrary locality: compute realistic 3.5 to 7.5 KM
+      const known = loc1 || loc2;
+      const otherStr = loc1 ? d : p;
+      let hash = 0;
+      for (let i = 0; i < otherStr.length; i++) {
+        hash = (hash + otherStr.charCodeAt(i) * 13) % 41;
+      }
+      const dist = 3.2 + (hash / 10);
+      return Math.round(dist * 10) / 10;
+    }
+
+    // Both arbitrary locations: compute realistic local city distance (2.0 to 6.5 KM)
+    let hash = 0;
+    const combined = p + '#' + d;
+    for (let i = 0; i < combined.length; i++) {
+      hash = (hash + combined.charCodeAt(i) * 17) % 45;
+    }
+    const dist = 2.0 + (hash / 10);
+    return Math.round(dist * 10) / 10;
+  }
+
+  // 2. Local Taxi Fare Calculation
+  // Base fare: ₹150 for first 2.5 KM (includes 2.5 KM ride)
+  // Beyond 2.5 KM: Sedan @ ₹28/KM, Prime Sedan @ ₹30/KM, Prime SUV @ ₹36/KM, Premium SUV @ ₹45/KM
+  function calculateLocalFare(km, pickup = '', drop = '', cabType = 'sedan') {
+    const dist = Math.max(0, parseFloat(km) || 0);
+    if (dist <= 0) return 0;
+
+    let baseFare = 150;
+    let perKmRate = 28;
+
+    if (cabType === 'prime_sedan') {
+      baseFare = 170;
+      perKmRate = 30;
+    } else if (cabType === 'prime_suv') {
+      baseFare = 250;
+      perKmRate = 36;
+    } else if (cabType === 'premium_suv') {
+      baseFare = 350;
+      perKmRate = 45;
+    }
+
+    let fare = baseFare;
+    if (dist > 2.5) {
+      fare += (dist - 2.5) * perKmRate;
+    }
+
+    // District border outskirts adjustment (+₹100)
+    const combined = (String(pickup) + ' ' + String(drop)).toLowerCase();
+    const borderOutskirts = [
+      'karumathampatti', 'karanampettai', 'paapampatti', 'ganeshapuram',
+      'kovilpalayam', 'karamadai', 'booluvampatti', 'pooluvapatti',
+      'ettimadai', 'kinathukadavu', 'malumichampatti', 'sulur'
+    ];
+    if (borderOutskirts.some(loc => combined.includes(loc))) {
+      fare += 100;
+    }
+
+    return Math.round(fare);
+  }
+
+  // 3. Oneway Drop Fare Calculation
+  function calculateOnewayFare(km, destName = '', pickupName = '', cabType = 'sedan') {
+    const normDrop = String(destName).toLowerCase().trim();
+    const normPickup = String(pickupName).toLowerCase().trim();
+    let baseRate = 0;
+
+    // Check fixed tariff dictionary match
+    for (let key in FIXED_ONEWAY_RATES) {
+      if (normDrop.includes(key) || normPickup.includes(key)) {
+        baseRate = FIXED_ONEWAY_RATES[key];
+        break;
+      }
+    }
+
+    if (!baseRate) {
+      const dist = Math.max(0, parseFloat(km) || 0);
+      if (dist <= 100) {
+        baseRate = dist * 2 * 17;
+      } else {
+        baseRate = (dist * 2 * 14) + 400;
+      }
+    }
+
+    // Apply vehicle class multiplier
+    let multiplier = 1.0;
+    if (cabType === 'prime_sedan') multiplier = 1.10;
+    else if (cabType === 'prime_suv') multiplier = 1.35;
+    else if (cabType === 'premium_suv') multiplier = 1.65;
+
+    return Math.round(baseRate * multiplier);
+  }
+
+  // 4. Outstation Round Trip Distance & Fare Calculation
+  function resolveOutstationDetails(destQuery = '') {
+    const q = String(destQuery).toLowerCase().trim();
+    for (let key in OUTSTATION_DISTANCES) {
+      if (q.includes(key) || key.includes(q)) {
+        return OUTSTATION_DISTANCES[key];
+      }
+    }
+    // Default estimate for unrecognized outstation destination
+    return { onewayKm: 125, roundTripKm: 250, isHills: isHillStation(q) };
+  }
+
+  function calculateOutstationFare(roundTripKm, isHills, cabType = 'sedan') {
+    const dist = Math.max(250, parseFloat(roundTripKm) || 250);
+    let perKm = 13;
+    let driverBatta = 400;
+    let hillCharge = isHills ? 400 : 0;
+
+    if (cabType === 'prime_sedan') {
+      perKm = 14;
+      driverBatta = 400;
+    } else if (cabType === 'prime_suv') {
+      perKm = 18;
+      driverBatta = 500;
+      if (isHills) hillCharge = 500;
+    } else if (cabType === 'premium_suv') {
+      perKm = 23;
+      driverBatta = 600;
+      if (isHills) hillCharge = 600;
+    }
+
+    const fare = (dist * perKm) + driverBatta + hillCharge;
+    return Math.round(fare);
+  }
+
+  // 5. Hourly Package Fare Calculation
+  function calculateHourlyFare(hours, cabType = 'sedan') {
+    const hrs = parseInt(hours, 10) || 1;
+    let basePrice = hrs * 350;
+    if (hrs >= 12) basePrice = 3500;
+    else if (hrs >= 10) basePrice = 3000;
+
+    let multiplier = 1.0;
+    if (cabType === 'prime_sedan') multiplier = 1.15;
+    else if (cabType === 'prime_suv') multiplier = 1.50;
+    else if (cabType === 'premium_suv') multiplier = 2.00;
+
+    return Math.round(basePrice * multiplier);
+  }
+
+  // 6. Address Input Handler (Location suggestion dropdowns disabled per user request)
+  function setupAddressAutocomplete() {
+    const selector = '.address-autocomplete, #local-pickup, #local-drop, #oneway-pickup, #oneway-drop, #outstation-pickup, #outstation-drop, #hourly-pickup, [data-field="pickup"], [data-field="drop"]';
+    const inputs = document.querySelectorAll(selector);
+
+    // Remove any existing autocomplete dropdown elements in the DOM
+    document.querySelectorAll('.autocomplete-dropdown').forEach(dd => dd.remove());
+
+    inputs.forEach(input => {
+      if (!input || input.dataset.autocompleteBound) return;
+      input.dataset.autocompleteBound = "true";
+      input.setAttribute('autocomplete', 'off');
+
+      // Remove any existing dropdown inside parent
+      const parent = input.closest('.field-group') || input.parentNode;
+      if (parent) {
+        const existingDropdown = parent.querySelector('.autocomplete-dropdown');
+        if (existingDropdown) existingDropdown.remove();
+      }
+
+      // Update fare estimates on typing without showing any location suggestions dropdown
+      input.addEventListener('input', function() {
+        updateAllEstimates();
+      });
+    });
   }
 
   // Update all estimate displays in the booking tabs
@@ -219,63 +616,91 @@ document.addEventListener('DOMContentLoaded', function () {
     // 1. Local Ride
     const localPickup = document.getElementById('local-pickup')?.value || '';
     const localDrop = document.getElementById('local-drop')?.value || '';
+    const localCabType = document.getElementById('local-cab-type')?.value || 'sedan';
     const localFareEl = document.getElementById('local-fare-display');
     if (localFareEl) {
       if (!localPickup.trim() || !localDrop.trim()) {
-        localFareEl.textContent = '-';
+        localFareEl.textContent = 'Enter pickup & drop';
       } else {
         const localDist = estimateLocalDistance(localPickup, localDrop);
-        const localPrice = calculateLocalFare(localDist, localPickup, localDrop);
-        localFareEl.textContent = formatPriceRange(localPrice);
+        const localPrice = calculateLocalFare(localDist, localPickup, localDrop, localCabType);
+        localFareEl.textContent = `${formatPriceRange(localPrice)} (~${localDist} KM)`;
       }
     }
 
     // 2. Oneway Ride
-    const onewayPickup = document.getElementById('oneway-pickup')?.value || 'Coimbatore';
-    const onewayDestSelect = document.getElementById('oneway-dest-select');
-    const onewayDrop = onewayDestSelect?.value || 'Ooty Bus Stand';
+    const onewayPickup = document.getElementById('oneway-pickup')?.value || '';
+    const onewayDrop = document.getElementById('oneway-drop')?.value || '';
+    const onewayCabType = document.getElementById('oneway-cab-type')?.value || 'sedan';
     const onewayFareEl = document.getElementById('oneway-fare-display');
     if (onewayFareEl) {
-      const selectedOpt = onewayDestSelect?.options?.[onewayDestSelect.selectedIndex];
-      const onewayDist = parseFloat(selectedOpt?.getAttribute('data-km') || 85);
-      const onewayPrice = calculateOnewayFare(onewayDist, onewayDrop, onewayPickup);
-      onewayFareEl.textContent = formatPriceRange(onewayPrice);
+      if (!onewayPickup.trim() || !onewayDrop.trim()) {
+        onewayFareEl.textContent = 'Enter pickup & drop';
+      } else {
+        const outstationDetails = resolveOutstationDetails(onewayDrop);
+        let onewayDist = 87;
+        if (outstationDetails && outstationDetails.onewayKm) {
+          onewayDist = outstationDetails.onewayKm;
+        } else {
+          const locDist = estimateLocalDistance(onewayPickup, onewayDrop);
+          if (locDist > 0) onewayDist = Math.max(25, locDist);
+        }
+        const onewayPrice = calculateOnewayFare(onewayDist, onewayDrop, onewayPickup, onewayCabType);
+        onewayFareEl.textContent = `${formatPriceRange(onewayPrice)} (${onewayDist} KM drop)`;
+      }
     }
 
     // 3. Outstation Round Trip
-    const outstationPickup = document.getElementById('outstation-pickup')?.value || 'Coimbatore';
-    const outstationDrop = document.getElementById('outstation-drop')?.value || 'Ooty';
+    const outstationPickup = document.getElementById('outstation-pickup')?.value || '';
+    const outstationDrop = document.getElementById('outstation-drop')?.value || '';
+    const outstationCabType = document.getElementById('outstation-cab-type')?.value || 'sedan';
     const manualHillsSelect = document.getElementById('outstation-is-hills');
-    
-    let isOutstationHills = isHillStation(outstationPickup, outstationDrop);
-    if (manualHillsSelect && isOutstationHills) {
-      manualHillsSelect.value = 'yes';
-    } else if (manualHillsSelect && manualHillsSelect.value === 'yes') {
-      isOutstationHills = true;
-    }
-
-    let outstationDist = isOutstationHills ? 300 : 250;
     const outstationFareEl = document.getElementById('outstation-fare-display');
+    
     if (outstationFareEl) {
-      const outstationPrice = calculateOutstationFare(outstationDist, isOutstationHills);
-      outstationFareEl.textContent = formatPriceRange(outstationPrice);
+      if (!outstationPickup.trim() || !outstationDrop.trim()) {
+        outstationFareEl.textContent = 'Enter pickup & destination';
+      } else {
+        const outstationDetails = resolveOutstationDetails(outstationDrop);
+        let isOutstationHills = outstationDetails.isHills || isHillStation(outstationPickup, outstationDrop);
+        
+        if (manualHillsSelect) {
+          if (manualHillsSelect.value === 'yes') {
+            isOutstationHills = true;
+          } else if (manualHillsSelect.value === 'no' && !outstationDetails.isHills) {
+            isOutstationHills = false;
+          } else if (isOutstationHills) {
+            manualHillsSelect.value = 'yes';
+          }
+        }
+
+        const outstationDist = outstationDetails.roundTripKm || (estimateLocalDistance(outstationPickup, outstationDrop) * 2) || 200;
+        const outstationPrice = calculateOutstationFare(outstationDist, isOutstationHills, outstationCabType);
+        outstationFareEl.textContent = `${formatPriceRange(outstationPrice)} (${outstationDist} KM Round Trip)`;
+      }
     }
 
     // 4. Hourly Package Rental
     const selectedHours = document.getElementById('hourly-pkg-select')?.value || 10;
+    const hourlyPickup = document.getElementById('hourly-pickup')?.value || '';
+    const hourlyCabType = document.getElementById('hourly-cab-type')?.value || 'sedan';
     const hourlyFareEl = document.getElementById('hourly-fare-display');
     if (hourlyFareEl) {
-      const hourlyPrice = calculateHourlyFare(selectedHours);
-      hourlyFareEl.textContent = formatPriceRange(hourlyPrice);
+      if (!hourlyPickup.trim()) {
+        hourlyFareEl.textContent = 'Enter pickup location';
+      } else {
+        const hourlyPrice = calculateHourlyFare(selectedHours, hourlyCabType);
+        hourlyFareEl.textContent = `${formatPriceRange(hourlyPrice)} (${selectedHours} Hrs Package)`;
+      }
     }
   }
 
   // Attach dynamic input event listeners for live price updates & auto hill detection
   const calcInputs = [
     'local-pickup', 'local-drop', 'local-cab-type',
-    'oneway-pickup', 'oneway-dest-select', 'oneway-cab-type',
+    'oneway-pickup', 'oneway-drop', 'oneway-cab-type',
     'outstation-pickup', 'outstation-drop', 'outstation-is-hills', 'outstation-cab-type',
-    'hourly-pkg-select', 'hourly-cab-type'
+    'hourly-pkg-select', 'hourly-cab-type', 'hourly-pickup'
   ];
 
   calcInputs.forEach(id => {
@@ -287,6 +712,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  // Initialize interactive address autocomplete on all booking address fields
+  setupAddressAutocomplete();
   updateAllEstimates();
 
   // 4. Booking Submission & Modal Popup
@@ -2293,101 +2720,247 @@ document.addEventListener('DOMContentLoaded', function () {
   function generateAiResponse(input) {
     const query = input.toLowerCase();
 
-    if (query.includes('ooty') || query.includes('nilgiri') || query.includes('coonoor')) {
+    // 1. Price Maths & Calculation Formulas
+    if (query.includes('math') || query.includes('formula') || query.includes('how is') || query.includes('calculate') || query.includes('calculation') || query.includes('per km') || query.includes('km rate')) {
       return `
-        <strong>🚕 Coimbatore to Ooty / Coonoor Cab Details:</strong><br>
-        • <strong>Ooty Bus Stand Oneway:</strong> <strong style="color:var(--brand-red);">₹3,500</strong> (87 KM net drop)<br>
-        • <strong>Coonoor / Kotagiri Oneway:</strong> <strong style="color:var(--brand-red);">₹2,800</strong> (70 KM net drop)<br>
-        • <strong>AC Vehicle:</strong> Mandatory AC enabled for all trips.<br>
-        • <strong>Driver:</strong> Expert Nilgiris hill road drivers included.<br><br>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
-          <a href="tel:9894020156" class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;">📞 Call 9894020156</a>
-          <button class="btn btn-yellow" style="padding:6px 12px; font-size:0.78rem;" onclick="window.prefillForm('Coimbatore', 'Ooty Bus Stand', 'oneway')">🚖 Pre-Fill Booking</button>
+        <strong>📐 Get Cabs Official Fare Pricing:</strong><br><br>
+        • <strong>Local City Taxi:</strong> Transparent upfront all-inclusive pricing based on exact route distance. Default AC enabled, zero peak surge charges.<br>
+        • <strong>Oneway Trips:</strong> Fixed all-inclusive route fares for popular destinations, or transparent rate calculation based on trip distance.<br>
+        • <strong>Round-Trip Outstation Rates:</strong> Budget sedan, spacious SUV, and luxury Crysta options available with zero hidden charges.<br>
+        • <strong>Tolls & Parking:</strong> Paid directly at actuals with zero hidden commission.<br><br>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="tel:9894020156" class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;">📞 Call 9894020156 for Quote</a>
+          <button class="btn btn-yellow" style="padding:6px 12px; font-size:0.78rem;" onclick="openDedicatedPage('tariff')">📋 View Tariff Card</button>
         </div>
       `;
     }
 
+    // 2. Ooty / Coonoor / Kotagiri / Nilgiris
+    if (query.includes('ooty') || query.includes('nilgiri') || query.includes('coonoor') || query.includes('kotagiri')) {
+      return `
+        <strong>🌲 Coimbatore to Ooty & Nilgiris Hill Cab Details:</strong><br><br>
+        • <strong>Distance & Time:</strong> 87 KM (2.5–3.5 Hours drive via Mettupalayam)<br>
+        • <strong>Hairpin Bends:</strong> <strong>36 Hairpin Curves</strong> on the scenic ghat road<br>
+        • <strong>E-Pass Requirement:</strong> Mandatory e-pass registration (pass.tnega.org) – drivers assist with checkposts<br>
+        • <strong>Tariffs:</strong><br>
+          &nbsp;&nbsp;🚗 <strong>Sedan (Dzire/Etios):</strong> Oneway Drop: <strong style="color:var(--brand-red);">₹3,500</strong> | Full Day Tour (220 KM): <strong style="color:var(--brand-red);">₹3,800</strong><br>
+          &nbsp;&nbsp;🚙 <strong>SUV (Ertiga):</strong> Oneway: <strong style="color:var(--brand-red);">₹3,800</strong> | Tour: <strong style="color:var(--brand-red);">₹5,500</strong><br>
+          &nbsp;&nbsp;🚐 <strong>Innova Crysta:</strong> Oneway: <strong style="color:var(--brand-red);">₹4,800</strong> | Tour: <strong style="color:var(--brand-red);">₹6,800</strong><br>
+          &nbsp;&nbsp;📍 <strong>Coonoor / Kotagiri Oneway:</strong> <strong style="color:var(--brand-red);">₹2,900</strong> (70–83 KM)<br>
+        • <strong>Sightseeing:</strong> Botanical Garden (7 AM–6:30 PM), Doddabetta Peak, Pykara Falls, Tea Estates<br><br>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="tel:9894020156" class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;">📞 Call 9894020156</a>
+          <button class="btn btn-yellow" style="padding:6px 12px; font-size:0.78rem;" onclick="window.prefillForm('Coimbatore', 'Ooty Bus Stand', 'oneway')">🚖 Book Ooty Cab</button>
+        </div>
+      `;
+    }
+
+    // 3. Munnar
+    if (query.includes('munnar')) {
+      return `
+        <strong>🏞️ Coimbatore to Munnar Tea Hills & Waterfalls:</strong><br><br>
+        • <strong>Distance & Time:</strong> 160 KM (4.5 Hours drive via Udumalpet & Marayoor)<br>
+        • <strong>Checkpost Rules:</strong> Chinnar Forest checkpost open 6:00 AM – 9:00 PM (Night ban 9 PM–6 AM)<br>
+        • <strong>Tariffs:</strong><br>
+          &nbsp;&nbsp;🚗 <strong>Sedan (Dzire/Etios):</strong> Oneway: <strong style="color:var(--brand-red);">₹3,800</strong> | 2 Days / 1 Night Tour: <strong style="color:var(--brand-red);">₹6,500</strong><br>
+          &nbsp;&nbsp;🚙 <strong>SUV (Ertiga):</strong> Oneway: <strong style="color:var(--brand-red);">₹5,800</strong> | 2D1N Tour: <strong style="color:var(--brand-red);">₹9,500</strong><br>
+          &nbsp;&nbsp;🚐 <strong>Innova Crysta:</strong> Oneway: <strong style="color:var(--brand-red);">₹7,200</strong> | 2D1N Tour: <strong style="color:var(--brand-red);">₹12,500</strong><br>
+        • <strong>Highlights:</strong> Cheeyappara Falls, Marayoor Sandalwood, Lakkam Falls, Eravikulam (Nilgiri Tahr), Mattupetty Dam<br><br>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="tel:9894020156" class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;">📞 Call 9894020156</a>
+          <button class="btn btn-yellow" style="padding:6px 12px; font-size:0.78rem;" onclick="window.openTourPackageDetail('munnar-hills')">🗺️ Munnar Details</button>
+        </div>
+      `;
+    }
+
+    // 4. Kodaikanal
+    if (query.includes('kodaikanal') || query.includes('kodai')) {
+      return `
+        <strong>🏔️ Coimbatore to Kodaikanal (Princess of Hills):</strong><br><br>
+        • <strong>Distance & Time:</strong> 175 KM (4.5 Hours drive via Batlagundu)<br>
+        • <strong>Hairpin Bends:</strong> <strong>14 Hairpin Curves</strong> on smooth asphalt highway<br>
+        • <strong>E-Pass Requirement:</strong> Mandatory e-pass required (pass.tnega.org)<br>
+        • <strong>Tariffs:</strong><br>
+          &nbsp;&nbsp;🚗 <strong>Sedan (Dzire/Etios):</strong> Oneway: <strong style="color:var(--brand-red);">₹4,200</strong> | 2 Days / 1 Night: <strong style="color:var(--brand-red);">₹6,800</strong><br>
+          &nbsp;&nbsp;🚙 <strong>SUV (Ertiga):</strong> Oneway: <strong style="color:var(--brand-red);">₹6,200</strong> | 2D1N: <strong style="color:var(--brand-red);">₹9,800</strong><br>
+          &nbsp;&nbsp;🚐 <strong>Innova Crysta:</strong> Oneway: <strong style="color:var(--brand-red);">₹7,800</strong> | 2D1N: <strong style="color:var(--brand-red);">₹12,800</strong><br>
+        • <strong>Highlights:</strong> Silver Cascade Falls, Kodai Lake Boating, Coaker's Walk, Pillar Rocks, Kurinji Andavar Temple<br><br>
+        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Call 9894020156 to Book</a>
+      `;
+    }
+
+    // 5. Valparai
+    if (query.includes('valparai')) {
+      return `
+        <strong>⛰️ Coimbatore to Valparai Tea Estate Special:</strong><br><br>
+        • <strong>Distance & Route:</strong> 105 KM via Pollachi & Aliyar Dam<br>
+        • <strong>Hairpin Bends:</strong> <strong>40 Hairpin Curves</strong> with panoramic tea valley views<br>
+        • <strong>Tariffs:</strong> Oneway: <strong style="color:var(--brand-red);">₹2,799 - ₹3,500</strong> | Full Day Tour: <strong style="color:var(--brand-red);">₹4,500</strong> (Sedan)<br>
+        • <strong>Highlights:</strong> Aliyar Dam Park, Monkey Falls, Carver Marsh Statue, Sholayar Dam, Nallamudi Poonjolai<br><br>
+        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Call 9894020156 to Book</a>
+      `;
+    }
+
+    // 6. Isha Yoga / Adiyogi / Vellingiri
+    if (query.includes('isha') || query.includes('adiyogi') || query.includes('dhyanalinga') || query.includes('vellingiri') || query.includes('perur')) {
+      return `
+        <strong>🕉️ Coimbatore to Isha Yoga Center & 112ft Adiyogi Shiva:</strong><br><br>
+        • <strong>Distance & Time:</strong> 30–33 KM (45 Minutes from City/Gandhipuram/Railway Stn)<br>
+        • <strong>Gate Timings:</strong> 6:00 AM – 8:00 PM | <strong>Adiyogi 3D Laser Show:</strong> 7:00 PM – 7:15 PM Daily<br>
+        • <strong>Tariffs:</strong><br>
+          &nbsp;&nbsp;🚗 <strong>Oneway Drop:</strong> <strong style="color:var(--brand-red);">₹1,100 flat</strong> (Sedan AC)<br>
+          &nbsp;&nbsp;🚗 <strong>Half-Day (Drop + 3-4 Hrs Wait & Return):</strong> <strong style="color:var(--brand-red);">₹1,200</strong><br>
+          &nbsp;&nbsp;🚗 <strong>Full-Day City + Isha Package:</strong> <strong style="color:var(--brand-red);">₹1,800</strong> (Sedan) / ₹2,600 (Ertiga)<br>
+        • <strong>Sightseeing Included:</strong> Perur Pateeswarar Temple (1000 yrs old), Dhyanalinga, Suryakund/Chandrakund, Kovai Kutralam Falls<br><br>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="tel:9894020156" class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;">📞 Call 9894020156</a>
+          <button class="btn btn-yellow" style="padding:6px 12px; font-size:0.78rem;" onclick="window.prefillForm('Coimbatore', 'Isha Yoga Center', 'oneway')">🚖 Book Isha Cab</button>
+        </div>
+      `;
+    }
+
+    // 7. Airport CJB
     if (query.includes('airport') || query.includes('cjb') || query.includes('peelamedu') || query.includes('flight')) {
       return `
-        <strong>✈️ Coimbatore Airport (CJB) Fixed Drop Rates:</strong><br>
-        • <strong>Airport to Tiruppur:</strong> ₹1,700 (46 KM)<br>
-        • <strong>Airport to Palakkad:</strong> ₹2,200 (61 KM)<br>
-        • <strong>Local Airport Drop/Pickup:</strong> Default AC Mini & Sedan cabs available 24/7.<br>
-        • <strong>Flight Delay Tracking:</strong> Driver waits at arrival hall with zero extra penalty.<br><br>
-        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Book 24/7 Airport Taxi</a>
+        <strong>✈️ Coimbatore International Airport (CJB) Cab Services:</strong><br><br>
+        • <strong>City Pickup / Drop:</strong> Gandhipuram, RS Puram, Peelamedu, Saravanampatti ₹499–₹650<br>
+        • <strong>Airport to Tiruppur:</strong> <strong style="color:var(--brand-red);">₹1,700 flat</strong> (46 KM)<br>
+        • <strong>Airport to Palakkad:</strong> <strong style="color:var(--brand-red);">₹2,200 flat</strong> (61 KM)<br>
+        • <strong>Airport to Ooty:</strong> <strong style="color:var(--brand-red);">₹3,500</strong> (Direct mountain cab ready at arrival)<br>
+        • <strong>Flight Delay Guarantee:</strong> Driver tracks flight status; zero waiting penalty if flight is delayed.<br><br>
+        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Book 24/7 Airport Taxi (9894020156)</a>
       `;
     }
 
-    if (query.includes('tariff') || query.includes('rate') || query.includes('price') || query.includes('cost') || query.includes('charge') || query.includes('local')) {
+    // 8. Hourly & Day Rental Packages
+    if (query.includes('hourly') || query.includes('rental') || query.includes('package') || query.includes('day package') || query.includes('10 hour') || query.includes('12 hour')) {
       return `
-        <strong>📊 Get Cabs Official Fare Card:</strong><br>
-        • <strong>Local City Cab:</strong> Upfront fixed local taxi packages with mandatory default AC.<br>
-        • <strong>1 Hour Rental:</strong> ₹350/hr (includes 10 KM free, extra KM @ ₹25/KM).<br>
-        • <strong>10 Hrs / 100 KM Day Package A:</strong> ₹3,000 (Extra KM ₹10).<br>
-        • <strong>12 Hrs / 100 KM Day Package B:</strong> ₹3,500 (Extra hr ₹150).<br>
-        • <strong>Fixed Oneway Drops:</strong> Annur/Isha ₹1,100, MTP ₹1,400, Pollachi ₹1,600, Tiruppur ₹1,900, Erode ₹3,500, Ooty Bus Stand ₹3,500, Palani ₹3,900.<br><br>
-        <button class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;" onclick="openDedicatedPage('tariff')">📋 View Full Tariff Card</button>
+        <strong>⏱️ Get Cabs Hourly & Daily Rental Packages:</strong><br><br>
+        • <strong>1 Hour Rental:</strong> <strong style="color:var(--brand-red);">₹350/hr</strong> (Includes 10 KM free; extra distance @ ₹25/KM)<br>
+        • <strong>Package A (10 Hours / 100 KM):</strong> <strong style="color:var(--brand-red);">₹3,000 flat</strong> (Extra KM: ₹10/KM)<br>
+        • <strong>Package B (12 Hours / 100 KM):</strong> <strong style="color:var(--brand-red);">₹3,500 flat</strong> (Extra hour: ₹150/hr)<br>
+        • <strong>Includes:</strong> Fuel, AC vehicle, professional driver, multi-stop flexibility across Coimbatore city, textile shops, hospitals, colleges, temples.<br><br>
+        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Call 9894020156 to Reserve Package</a>
       `;
     }
 
-    if (query.includes('pollachi') || query.includes('palani') || query.includes('tirupur') || query.includes('erode') || query.includes('isha') || query.includes('route')) {
+    // 9. Popular Drops & Intercity Routes
+    if (query.includes('pollachi') || query.includes('palani') || query.includes('tirupur') || query.includes('tiruppur') || query.includes('erode') || query.includes('salem') || query.includes('madurai') || query.includes('bangalore') || query.includes('mysore') || query.includes('palakkad') || query.includes('sathyamangalam') || query.includes('annur') || query.includes('anaikatti') || query.includes('mettupalayam') || query.includes('mtp') || query.includes('dharapuram') || query.includes('yercaud') || query.includes('guruvayur') || query.includes('trichy') || query.includes('kanyakumari')) {
       return `
-        <strong>🗺️ Official Fixed Drop Rates from Coimbatore:</strong><br>
-        • <strong>Annur / Isha Yoga:</strong> ₹1,100 (30-33 KM)<br>
-        • <strong>Mettupalayam:</strong> ₹1,400 (37 KM)<br>
-        • <strong>Pollachi:</strong> ₹1,600 (43 KM)<br>
-        • <strong>Tiruppur / Palakkad:</strong> ₹1,900 (52-55 KM)<br>
-        • <strong>Sathyamangalam:</strong> ₹2,500 (70 KM)<br>
+        <strong>🗺️ Official Fixed One-Way Drop Rates from Coimbatore:</strong><br><br>
+        • <strong>Annur / Isha Yoga:</strong> ₹1,100 (30–33 KM)<br>
+        • <strong>Anaikatti:</strong> ₹1,300 (30 KM)<br>
+        • <strong>Mettupalayam (MTP):</strong> ₹1,400 (37 KM)<br>
+        • <strong>Palladam / Sirumugai:</strong> ₹1,500 (40 KM)<br>
+        • <strong>Pollachi / Avinashi:</strong> ₹1,600 (43 KM)<br>
+        • <strong>Tiruppur / Palakkad:</strong> ₹1,900 (52–55 KM)<br>
+        • <strong>Sathyamangalam / Udumalpet:</strong> ₹2,500 (70 KM)<br>
+        • <strong>Coonoor / Kotagiri:</strong> ₹2,900 (70–83 KM)<br>
+        • <strong>Dharapuram:</strong> ₹2,950 (85 KM)<br>
         • <strong>Erode:</strong> ₹3,500 (100 KM)<br>
-        • <strong>Palani:</strong> ₹3,900 (110 KM)<br><br>
-        <button class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;" onclick="openDedicatedPage('popular-routes')">🗺️ Browse All Fixed Routes</button>
+        • <strong>Ooty Bus Stand:</strong> ₹3,500 (87 KM)<br>
+        • <strong>Palani Murugan Temple:</strong> ₹3,900 (110 KM)<br>
+        • <strong>Yercaud:</strong> ₹4,800 (195 KM Full Day)<br>
+        • <strong>Bangalore:</strong> ₹7,499 (360 KM oneway)<br>
+        • <strong>Mysore:</strong> ₹5,499 (200 KM oneway)<br><br>
+        <button class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;" onclick="openDedicatedPage('popular-routes')">🗺️ Browse All Routes</button>
       `;
     }
 
-    if (query.includes('discount') || query.includes('spin') || query.includes('coupon') || query.includes('offer')) {
+    // 10. Vehicles & Fleet
+    if (query.includes('car') || query.includes('vehicle') || query.includes('innova') || query.includes('crysta') || query.includes('ertiga') || query.includes('sedan') || query.includes('swift') || query.includes('dzire') || query.includes('tempo') || query.includes('traveller') || query.includes('fleet')) {
+      return `
+        <strong>🚗 Get Cabs Coimbatore Fleet Options:</strong><br><br>
+        • <strong>Hatchback (WagonR/Tiago):</strong> 4 Seater, 2 small bags. Ideal for city quick rides.<br>
+        • <strong>Prime Sedan (Swift Dzire/Etios):</strong> 4 Seater, 3 medium bags, spacious trunk, default AC.<br>
+        • <strong>Spacious SUV (Maruti Ertiga/XL6):</strong> 6 Seater + luggage carrier, great for family hill trips.<br>
+        • <strong>Luxury SUV (Toyota Innova Crysta):</strong> 7 Seater, captain chairs, unmatched hill suspension.<br>
+        • <strong>Tempo Traveller (12/14/18 Seater):</strong> Group tours, corporate trips, pushback AC seats.<br><br>
+        <a href="tel:9894020156" class="btn btn-red" style="padding:6px 14px; font-size:0.8rem; display:inline-block;">📞 Call 9894020156 for Fleet Booking</a>
+      `;
+    }
+
+    // 11. Policies, Cancellation, Refund, AC
+    if (query.includes('cancel') || query.includes('refund') || query.includes('ac') || query.includes('e-pass') || query.includes('epass') || query.includes('pass') || query.includes('surge') || query.includes('night') || query.includes('policy')) {
+      return `
+        <strong>📋 Get Cabs Policies & Customer Guarantees:</strong><br><br>
+        • <strong>100% Free Cancellation:</strong> Cancel anytime prior to driver dispatch with zero fee.<br>
+        • <strong>Nominal Fee:</strong> Only ₹100 applies if cancelled after driver arrives at pickup location.<br>
+        • <strong>Advance Booking Refunds:</strong> 100% full refund within 24 hours to your UPI/bank.<br>
+        • <strong>Weather/Road Closures:</strong> 100% fee waiver for landslides or government mountain road bans.<br>
+        • <strong>Air Conditioning:</strong> Enabled by default for all trips at no extra surcharge.<br>
+        • <strong>Zero Surge:</strong> No peak multiplier or rain surcharge in Coimbatore.<br>
+        • <strong>E-Pass Support:</strong> Drivers assist with Ooty / Kodaikanal TN e-pass checkposts.<br><br>
+        <button class="btn btn-red" style="padding:6px 12px; font-size:0.78rem;" onclick="openDedicatedPage('cancellation-policy')">📄 Read Policy</button>
+      `;
+    }
+
+    // 12. Offers & Discount
+    if (query.includes('discount') || query.includes('spin') || query.includes('coupon') || query.includes('offer') || query.includes('promo')) {
       openDiscountModal();
       return `
         <strong>🎁 Spin & Win Discount Unlocked!</strong><br>
-        I have opened our Spin & Win wheel. Spin the wheel to unlock <strong>₹100 Off Coupon Code: GET100</strong> or a Free Airport Upgrade!
+        I have opened our Spin & Win wheel. Use Coupon Code <strong style="color:var(--brand-red);">GET100</strong> for <strong>₹100 Off</strong> on your first outstation ride!
       `;
     }
 
-    if (query.includes('contact') || query.includes('number') || query.includes('phone') || query.includes('call') || query.includes('book')) {
+    // 13. Contact & Booking
+    if (query.includes('contact') || query.includes('number') || query.includes('phone') || query.includes('call') || query.includes('book') || query.includes('helpline') || query.includes('office')) {
       return `
-        <strong>📞 Contact Get Cabs Coimbatore 24/7:</strong><br>
-        • <strong>Hotline:</strong> <a href="tel:9894020156" style="color:var(--brand-red); font-weight:800;">9894020156</a><br>
-        • <strong>WhatsApp:</strong> <a href="https://wa.me/919894020156" target="_blank" style="color:#25d366; font-weight:800;">Chat on WhatsApp</a><br>
-        • <strong>Office:</strong> Gandhipuram & Peelamedu Airport Rd, Coimbatore<br><br>
-        Call <strong>9894020156</strong> for instant driver dispatch within 10 minutes!
+        <strong>📞 Contact Get Cabs Coimbatore 24/7:</strong><br><br>
+        • <strong>24/7 Hotline:</strong> <a href="tel:9894020156" style="color:var(--brand-red); font-weight:800; font-size:1.05rem;">9894020156</a><br>
+        • <strong>WhatsApp:</strong> <a href="https://wa.me/919894020156?text=Hi%20Get%20Cabs,%20I%20want%20to%20book%20a%20cab" target="_blank" style="color:#25d366; font-weight:800;">Chat on WhatsApp (9894020156)</a><br>
+        • <strong>Email:</strong> booking@getcabs.in<br>
+        • <strong>Office:</strong> Gandhipuram Taxi Stand & Peelamedu Airport Rd, Coimbatore - 641001<br><br>
+        ⚡ Cabs dispatched within <strong>5 to 10 minutes</strong> across Coimbatore!
       `;
     }
 
-    // Default friendly response
+    // Default friendly full breakdown response
     return `
-      I am Get Cabs AI Assistant! I can tell you about:<br>
-      • <strong>Local City Taxi Services (Default AC enabled Mini & Sedan)</strong><br>
-      • <strong>Fixed Oneway Drop Rates (Ooty ₹3,500, Pollachi ₹1,600, Palani ₹3,900, Isha ₹1,100, Erode ₹3,500)</strong><br>
-      • <strong>Day Rental Packages (10 Hrs / 100 KM @ ₹3,000, 12 Hrs @ ₹3,500)</strong><br>
-      • <strong>Hourly Rentals (₹350/hr with 10 KM free)</strong><br><br>
-      Need a quick quote? Call <strong>9894020156</strong> or ask me a specific route!
+      <strong>👋 I am Get Cabs AI Assistant (Gemini Mini)!</strong><br><br>
+      I know all pricing, routes, price maths, and fleet details of Get Cabs Coimbatore:<br>
+      • <strong>Local City Taxi:</strong> Base ₹150 (first 2.5 KM) + ₹28–₹30/KM (Default AC, Zero Surge)<br>
+      • <strong>Fixed One-Way Drops:</strong> Ooty (₹3,500), Pollachi (₹1,600), Palani (₹3,900), Isha Yoga (₹1,100), Erode (₹3,500), Munnar (₹3,800)<br>
+      • <strong>Hourly Rentals:</strong> ₹350/hr (10 KM free) | 10 Hrs / 100 KM @ ₹3,000 | 12 Hrs @ ₹3,500<br>
+      • <strong>Airport Drops (CJB):</strong> Tiruppur ₹1,700, Palakkad ₹2,200, City ₹499–₹650<br>
+      • <strong>Price Maths:</strong> Oneway < 100 KM @ ₹17/KM roundtrip; Oneway > 130 KM @ ₹14/KM + ₹400 Batta<br><br>
+      Ask me any route, vehicle, price calculation, or call <strong>[9894020156](tel:9894020156)</strong> for instant booking!
     `;
   }
 
-  window.prefillForm = function(pickup, drop, mode) {
+  window.prefillForm = function(pickup, drop, mode = 'local') {
     if (aiChatWindow) aiChatWindow.classList.remove('active');
-    const bookingSection = document.getElementById('booking-form-section') || document.querySelector('.booking-card');
+    const bookingSection = document.getElementById('booking-forms-wrapper') || document.querySelector('.booking-card');
     if (bookingSection) {
       bookingSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    const pEl = document.getElementById('pickup');
-    const dEl = document.getElementById('drop');
-    if (pEl) pEl.value = pickup;
-    if (dEl) dEl.value = drop;
 
-    // Trigger tab switch if mode exists
+    // Switch tab
+    const targetTabBtn = document.querySelector(`.tab-btn[data-tab="${mode}"]`);
+    if (targetTabBtn) {
+      targetTabBtn.click();
+    }
+
     if (mode === 'oneway') {
-      const onewayTab = document.querySelector('.tab-btn[data-tab="oneway"]');
-      if (onewayTab) onewayTab.click();
+      const pEl = document.getElementById('oneway-pickup');
+      const dEl = document.getElementById('oneway-drop');
+      if (pEl && pickup) pEl.value = pickup;
+      if (dEl && drop) dEl.value = drop;
+    } else if (mode === 'outstation') {
+      const pEl = document.getElementById('outstation-pickup');
+      const dEl = document.getElementById('outstation-drop');
+      if (pEl && pickup) pEl.value = pickup;
+      if (dEl && drop) dEl.value = drop;
+    } else {
+      const pEl = document.getElementById('local-pickup');
+      const dEl = document.getElementById('local-drop');
+      if (pEl && pickup) pEl.value = pickup;
+      if (dEl && drop) dEl.value = drop;
+    }
+
+    if (typeof updateAllEstimates === 'function') {
+      updateAllEstimates();
     }
   };
 
@@ -2437,142 +3010,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // 14. OpenStreetMap / Nominatim Address Autocomplete Engine (100% Free, No API Key Required)
-  function initAddressAutocomplete() {
-    const selector = '#local-pickup, #local-drop, #oneway-pickup, #outstation-pickup, #outstation-drop, [data-field="pickup"], [data-field="drop"]';
-    const inputs = document.querySelectorAll(selector);
-
-    const LOCAL_SUGGESTIONS = [
-      "Gandhipuram, Coimbatore",
-      "RS Puram, Coimbatore",
-      "Peelamedu, Coimbatore",
-      "Saravanampatti, Coimbatore",
-      "Coimbatore International Airport (CJB)",
-      "Coimbatore Junction Railway Station",
-      "Ukkadam Bus Stand, Coimbatore",
-      "Singanallur, Coimbatore",
-      "Eachanari, Coimbatore",
-      "Brookefields Mall, RS Puram",
-      "Prozone Mall, Saravanampatti",
-      "Isha Yoga Center, Velliangiri Foothills",
-      "Marudhamalai Temple, Coimbatore",
-      "Mettupalayam, Coimbatore",
-      "Ooty (Udhagamandalam)",
-      "Pollachi, Tamil Nadu",
-      "Tirupur Town, Tamil Nadu",
-      "Erode, Tamil Nadu",
-      "Palani, Tamil Nadu",
-      "Valparai, Tamil Nadu",
-      "Munnar, Kerala",
-      "Kodaikanal, Tamil Nadu"
-    ];
-
-    inputs.forEach(input => {
-      if (!input || input.dataset.autocompleteBound) return;
-      input.dataset.autocompleteBound = "true";
-
-      const parent = input.parentNode;
-      if (parent) {
-        parent.style.position = 'relative';
-      }
-
-      const listContainer = document.createElement('div');
-      listContainer.className = 'autocomplete-dropdown';
-      listContainer.style.cssText = 'position:absolute; top:100%; left:0; right:0; background:#ffffff; border:1px solid #cbd5e1; border-radius:8px; box-shadow:0 10px 25px rgba(0,0,0,0.15); z-index:1000; max-height:220px; overflow-y:auto; display:none; margin-top:4px;';
-      
-      if (parent) {
-        parent.appendChild(listContainer);
-      }
-
-      let debounceTimer;
-
-      input.addEventListener('input', function() {
-        const query = this.value.trim();
-        clearTimeout(debounceTimer);
-
-        if (query.length < 2) {
-          listContainer.style.display = 'none';
-          listContainer.innerHTML = '';
-          return;
-        }
-
-        const matchedLocal = LOCAL_SUGGESTIONS.filter(item =>
-          item.toLowerCase().includes(query.toLowerCase())
-        );
-
-        renderSuggestions(matchedLocal);
-
-        debounceTimer = setTimeout(() => {
-          // Query Ola Maps places autocomplete API with fallback
-          fetch(`/api/autocomplete?input=${encodeURIComponent(query)}`)
-            .then(res => res.json())
-            .then(data => {
-              if (data && data.suggestions && data.suggestions.length > 0) {
-                const combined = Array.from(new Set([...matchedLocal, ...data.suggestions]));
-                renderSuggestions(combined);
-              } else {
-                // Direct Ola Maps API client attempt
-                const olaKey = 'l2kC5mBd5G5Nivu3wcw6GmV2OO1bLUPGkDA0ZeCK';
-                fetch(`https://api.olamaps.io/places/v1/autocomplete?input=${encodeURIComponent(query)}&api_key=${olaKey}`)
-                  .then(r => r.json())
-                  .then(olaData => {
-                    if (olaData && olaData.predictions && olaData.predictions.length > 0) {
-                      const olaNames = olaData.predictions.map(p => {
-                        if (p.structured_formatting) {
-                          const m = p.structured_formatting.main_text || '';
-                          const s = p.structured_formatting.secondary_text || '';
-                          return s ? `${m}, ${s}` : m;
-                        }
-                        return p.description || '';
-                      }).filter(Boolean);
-                      const combined = Array.from(new Set([...matchedLocal, ...olaNames]));
-                      renderSuggestions(combined);
-                    }
-                  })
-                  .catch(() => {});
-              }
-            })
-            .catch(() => {});
-        }, 250);
-      });
-
-      function renderSuggestions(items) {
-        if (!items || items.length === 0) {
-          listContainer.style.display = 'none';
-          listContainer.innerHTML = '';
-          return;
-        }
-
-        listContainer.innerHTML = items.slice(0, 6).map(item => `
-          <div class="autocomplete-item" style="padding:10px 14px; cursor:pointer; font-size:0.88rem; color:#1e293b; border-bottom:1px solid #f1f5f9;">
-            📍 <strong>${item}</strong>
-          </div>
-        `).join('');
-
-        listContainer.style.display = 'block';
-
-        const itemEls = listContainer.querySelectorAll('.autocomplete-item');
-        itemEls.forEach((el, idx) => {
-          el.addEventListener('click', function(e) {
-            e.stopPropagation();
-            input.value = items[idx];
-            listContainer.style.display = 'none';
-            input.dispatchEvent(new Event('input', { bubbles: true }));
-            input.dispatchEvent(new Event('change', { bubbles: true }));
-          });
-        });
-      }
-
-      document.addEventListener('click', function(e) {
-        if (parent && !parent.contains(e.target)) {
-          listContainer.style.display = 'none';
-        }
-      });
-    });
-  }
-
-  // Initialize Autocomplete
-  initAddressAutocomplete();
-
+  // End of initialization
 });
 

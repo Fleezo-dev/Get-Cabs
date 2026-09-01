@@ -35,34 +35,20 @@
   [
     {
       "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "TaxiService",
-          "name": "Get Cabs Coimbatore",
-          "description": "Coimbatore's premier 24/7 taxi booking service offering Local City Rides, Oneway Cabs, Outstation Round Trips, and Airport Drops.",
-          "keywords": ["Get Cabs Coimbatore", "call taxi in Coimbatore", "Coimbatore taxi service", "outstation cab in Coimbatore"]
-        },
-        {
-          "@type": "TaxiService",
-          "name": "Get Cabs Coimbatore",
-          "areaServed": "Coimbatore, Tamil Nadu, India",
-          "telephone": "+919894020156",
-          "url": "https://getcabscoimbatore.com"
-        }
-      ]
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "TaxiService",
-      "@id": "https://getcabscoimbatore.com/#business",
+      "@type": ["LocalBusiness", "TaxiService"],
+      "@id": "https://www.getcabs.in/#business",
       "name": "Get Cabs Coimbatore",
-      "alternateName": ["Get Cabs Taxi Service 9894020156", "Get Cabs Kovai"],
-      "description": "Coimbatore's premier 24/7 taxi booking service offering Local City Rides, Oneway Cabs to Ooty, Pollachi, Tirupur, Erode, Outstation Round Trips, and Airport Taxi drops.",
+      "alternateName": ["Get Cabs Taxi Service 9894020156", "Get Cabs Kovai", "Get Cabs Tour Packages"],
+      "image": "https://www.getcabs.in/public/assets/images/dest-ooty.png",
+      "logo": "https://www.getcabs.in/public/assets/images/dest-ooty.png",
+      "description": "Coimbatore's premier 24/7 call taxi service offering Local City Rides, Oneway Cabs to Ooty, Pollachi, Tirupur, Erode, Outstation Round Trips, and Airport Taxi drops.",
       "telephone": "+919894020156",
+      "email": "booking@getcabs.in",
       "priceRange": "₹",
-      "url": "https://getcabscoimbatore.com",
+      "url": "https://www.getcabs.in",
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Main Road, Gandhipuram",
         "addressLocality": "Coimbatore",
         "addressRegion": "Tamil Nadu",
         "postalCode": "641001",
@@ -80,7 +66,17 @@
         ],
         "opens": "00:00",
         "closes": "23:59"
-      }
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "Coimbatore"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Tamil Nadu"
+        }
+      ]
     },
     {
       "@context": "https://schema.org",
@@ -139,6 +135,76 @@
       imgEl.src = window.getFallbackSvg(title || imgEl.alt || 'Get Cabs Tour');
     };
   </script>
+
+  <style>
+    /* Address Autocomplete Dropdown */
+    .field-group {
+      position: relative !important;
+    }
+    .autocomplete-dropdown,
+    .autocomplete-dropdown.open {
+      display: none !important;
+    }
+    @keyframes autocompleteFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .autocomplete-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #f1f5f9;
+      font-size: 0.9rem;
+      color: #1e293b;
+      transition: background 0.12s, color 0.12s;
+    }
+    .autocomplete-item:last-child {
+      border-bottom: none;
+    }
+    .autocomplete-item:hover,
+    .autocomplete-item.selected {
+      background-color: #fef2f2;
+      color: #d90429;
+    }
+    .autocomplete-item .item-main {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .autocomplete-item .item-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .autocomplete-item .item-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background-color: #f1f5f9;
+      color: #64748b;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      letter-spacing: 0.5px;
+    }
+    .autocomplete-item:hover .item-tag,
+    .autocomplete-item.selected .item-tag {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    .autocomplete-empty {
+      padding: 12px 14px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      text-align: center;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
 
@@ -269,11 +335,11 @@
             <div class="form-grid-3">
               <div class="field-group">
                 <label>📍 Pickup Location</label>
-                <input type="text" class="input-ctrl" data-field="pickup" id="local-pickup" placeholder="e.g. Gandhipuram, Peelamedu, RS Puram" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="local-pickup" placeholder="e.g. Gandhipuram, Peelamedu, RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>🏁 Dropoff Location</label>
-                <input type="text" class="input-ctrl" data-field="drop" id="local-drop" placeholder="e.g. Coimbatore Airport CJB or Railway Station" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="local-drop" placeholder="e.g. Coimbatore Airport CJB or Railway Station" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>📅 Pickup Date & Time</label>
@@ -284,7 +350,7 @@
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
                 <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" value="9894020156" placeholder="Your 10-digit mobile number" required />
+                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
                 <label>🚗 Vehicle Type</label>
@@ -304,11 +370,11 @@
               <div class="summary-info">
                 <span>⚡ Instant Driver Confirmation</span>
                 <span>• AC Guaranteed</span>
-                <span>• Fixed Fare Range</span>
+                <span>• Upfront All-Inclusive Fare</span>
               </div>
               <div>
                 <span>Estimated Fare: </span>
-                <span class="price-tag" id="local-fare-display">-</span>
+                <span class="price-tag" id="local-fare-display">Enter pickup & drop</span>
               </div>
             </div>
           </form>
@@ -320,38 +386,11 @@
             <div class="form-grid-3">
               <div class="field-group">
                 <label>📍 Pickup City / Area</label>
-                <input type="text" class="input-ctrl" data-field="pickup" id="oneway-pickup" value="Coimbatore" placeholder="Pickup location" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="oneway-pickup" placeholder="e.g. Coimbatore, Gandhipuram, RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
-                <label>🏁 Destination Route</label>
-                <select class="input-ctrl" data-field="drop" id="oneway-dest-select">
-                  <option value="Ooty Bus Stand" data-km="87" selected>Ooty Bus Stand (87 KM - ₹3,500)</option>
-                  <option value="Annur" data-km="30">Annur (30 KM - ₹1,100)</option>
-                  <option value="Isha Yoga Center" data-km="33">Isha Yoga Center (33 KM - ₹1,100)</option>
-                  <option value="Anaikatti" data-km="30">Anaikatti (30 KM - ₹1,300)</option>
-                  <option value="Mettupalayam" data-km="37">Mettupalayam (37 KM - ₹1,400)</option>
-                  <option value="Palladam" data-km="39">Palladam (39 KM - ₹1,500)</option>
-                  <option value="Sirumugai" data-km="40">Sirumugai (40 KM - ₹1,500)</option>
-                  <option value="Pollachi" data-km="43">Pollachi (43 KM - ₹1,600)</option>
-                  <option value="Avinashi" data-km="42">Avinashi (42 KM - ₹1,600)</option>
-                  <option value="MTP Vana Bathrakaliamman Kovil" data-km="42">MTP Vana Bathrakaliamman Kovil (42 KM - ₹1,600)</option>
-                  <option value="Airport to Tiruppur" data-km="46">Airport to Tiruppur (46 KM - ₹1,700)</option>
-                  <option value="Puliyampatti" data-km="49">Puliyampatti (49 KM - ₹1,800)</option>
-                  <option value="Palakkad" data-km="52">Palakkad (52 KM - ₹1,900)</option>
-                  <option value="Tiruppur" data-km="55">Tiruppur (55 KM - ₹1,900)</option>
-                  <option value="Airport to Palakkad" data-km="61">Airport to Palakkad (61 KM - ₹2,200)</option>
-                  <option value="Sathyamangalam" data-km="70">Sathyamangalam (70 KM - ₹2,500)</option>
-                  <option value="Kangeyam" data-km="70">Kangeyam (70 KM - ₹2,500)</option>
-                  <option value="Udumalpet" data-km="70">Udumalpet (70 KM - ₹2,500)</option>
-                  <option value="Perundurai" data-km="80">Perundurai (80 KM - ₹2,900)</option>
-                  <option value="Gobi" data-km="83">Gobi (83 KM - ₹2,900)</option>
-                  <option value="Coonoor" data-km="70">Coonoor (70 KM - ₹2,900)</option>
-                  <option value="Kotagiri" data-km="70">Kotagiri (70 KM - ₹2,900)</option>
-                  <option value="Dharapuram" data-km="85">Dharapuram (85 KM - ₹2,950)</option>
-                  <option value="Erode" data-km="100">Erode (100 KM - ₹3,500)</option>
-                  <option value="Palani" data-km="110">Palani (110 KM - ₹3,900)</option>
-                  <option value="Custom" data-km="80">Custom Distance Route</option>
-                </select>
+                <label>🏁 Destination City / Drop Location</label>
+                <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="oneway-drop" placeholder="e.g. Ooty, Munnar, Tiruppur, Palakkad, Erode" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>📅 Departure Date & Time</label>
@@ -362,7 +401,7 @@
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
                 <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" value="9894020156" required />
+                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
                 <label>🚗 Cab Choice</label>
@@ -386,7 +425,7 @@
               </div>
               <div>
                 <span>Final Price: </span>
-                <span class="price-tag" id="oneway-fare-display">₹3,050 ~ ₹3,280</span>
+                <span class="price-tag" id="oneway-fare-display">Enter pickup & drop</span>
               </div>
             </div>
           </form>
@@ -398,11 +437,11 @@
             <div class="form-grid-5">
               <div class="field-group">
                 <label>📍 From City</label>
-                <input type="text" class="input-ctrl" data-field="pickup" id="outstation-pickup" value="Coimbatore" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="outstation-pickup" placeholder="e.g. Coimbatore, Airport CJB, Railway Station" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>🏁 Destination Cities</label>
-                <input type="text" class="input-ctrl" data-field="drop" id="outstation-drop" placeholder="e.g. Ooty, Munnar, Kodaikanal" value="Ooty" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="drop" id="outstation-drop" placeholder="e.g. Ooty, Munnar, Kodaikanal" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>📅 Start Date</label>
@@ -415,8 +454,8 @@
               <div class="field-group">
                 <label>⛰️ Hill Station Route</label>
                 <select class="input-ctrl" id="outstation-is-hills">
-                  <option value="no">Auto-Detect / Plain Route</option>
-                  <option value="yes" selected>Yes - Hill Station Route (+₹400 Hill Charge)</option>
+                  <option value="no" selected>Auto-Detect / Plain Route</option>
+                  <option value="yes">Yes - Hill Station Route</option>
                 </select>
               </div>
             </div>
@@ -424,14 +463,14 @@
             <div class="form-grid-3" style="margin-top:16px;">
               <div class="field-group">
                 <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" value="9894020156" required />
+                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
               </div>
               <div class="field-group">
                 <label>🚗 Vehicle Class</label>
                 <select class="input-ctrl" id="outstation-cab-type">
-                  <option value="sedan">Sedan (Dzire / Etios)</option>
+                  <option value="sedan" selected>Sedan (Dzire / Etios)</option>
                   <option value="prime_sedan">Prime Sedan (Ciaz / Sunny / Aura)</option>
-                  <option value="prime_suv" selected>Prime SUV (Ertiga / XL6)</option>
+                  <option value="prime_suv">Prime SUV (Ertiga / XL6)</option>
                   <option value="premium_suv">Premium SUV (Innova Crysta / Hycross)</option>
                 </select>
               </div>
@@ -447,7 +486,7 @@
               </div>
               <div>
                 <span>Final Price: </span>
-                <span class="price-tag" id="outstation-fare-display">₹4,650 ~ ₹5,000</span>
+                <span class="price-tag" id="outstation-fare-display">Enter pickup & destination</span>
               </div>
             </div>
           </form>
@@ -460,20 +499,20 @@
               <div class="field-group">
                 <label>⏱️ Select Rental Duration</label>
                 <select class="input-ctrl" id="hourly-pkg-select">
-                  <option value="1">1 Hour Rental — ₹350 (10 KM free, Extra KM ₹25)</option>
-                  <option value="2">2 Hours Rental — ₹700 (20 KM free)</option>
-                  <option value="3">3 Hours Rental — ₹1,050 (30 KM free)</option>
-                  <option value="4">4 Hours Rental — ₹1,400 (40 KM free)</option>
-                  <option value="5">5 Hours Rental — ₹1,750 (50 KM free)</option>
-                  <option value="6">6 Hours Rental — ₹2,100 (60 KM free)</option>
-                  <option value="8">8 Hours Rental — ₹2,800 (80 KM free)</option>
-                  <option value="10" selected>10 Hours / 100 KM Day Package A — ₹3,000 (Extra KM ₹10, Extra Hr ₹150)</option>
-                  <option value="12">12 Hours / 100 KM Day Package B — ₹3,500 (Extra Hr ₹150)</option>
+                  <option value="1">1 Hour Rental (10 KM Package)</option>
+                  <option value="2">2 Hours Rental (20 KM Package)</option>
+                  <option value="3">3 Hours Rental (30 KM Package)</option>
+                  <option value="4">4 Hours Rental (40 KM Package)</option>
+                  <option value="5">5 Hours Rental (50 KM Package)</option>
+                  <option value="6">6 Hours Rental (60 KM Package)</option>
+                  <option value="8">8 Hours Rental (80 KM Package)</option>
+                  <option value="10" selected>10 Hours Rental (100 KM Package)</option>
+                  <option value="12">12 Hours Rental (120 KM Package)</option>
                 </select>
               </div>
               <div class="field-group">
                 <label>📍 Pickup Location</label>
-                <input type="text" class="input-ctrl" data-field="pickup" placeholder="e.g. Coimbatore Railway Station / RS Puram" required />
+                <input type="text" class="input-ctrl address-autocomplete" data-field="pickup" id="hourly-pickup" placeholder="e.g. Coimbatore Railway Station / RS Puram" autocomplete="off" required />
               </div>
               <div class="field-group">
                 <label>📅 Start Date & Time</label>
@@ -481,7 +520,7 @@
               </div>
               <div class="field-group">
                 <label>📱 Mobile Number</label>
-                <input type="tel" class="input-ctrl" data-field="phone" value="9894020156" required />
+                <input type="tel" class="input-ctrl" data-field="phone" placeholder="Your 10-digit mobile number" required />
               </div>
             </div>
 
@@ -506,12 +545,12 @@
 
             <div class="booking-summary-bar">
               <div class="summary-info">
-                <span>⏱️ Up to 10 Hours & 100 KM</span>
+                <span>⏱️ Hourly City Package</span>
                 <span>• Multiple City Stops Allowed</span>
               </div>
               <div>
                 <span>Final Price: </span>
-                <span class="price-tag" id="hourly-fare-display">₹1,302 ~ ₹1,400</span>
+                <span class="price-tag" id="hourly-fare-display">Enter pickup location</span>
               </div>
             </div>
           </form>
@@ -858,7 +897,7 @@
 
       <div class="tour-packages-grid" id="homepage-packages-grid">
         <!-- Package 1: Ooty, Coonoor & Kotagiri -->
-        <div class="tour-package-card reveal delay-1" data-open-package="ooty-coonoor-kotagiri">
+        <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-ooty.png" alt="Ooty Coonoor Kotagiri Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Ooty Coonoor Nilgiris Tour');" />
             <span class="package-badge-category">Nilgiris Hill Special</span>
@@ -878,13 +917,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹2,380</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-nilgiris.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 2: Munnar -->
-        <div class="tour-package-card reveal delay-2" data-open-package="munnar-hills">
+        <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-munnar.png" alt="Munnar Tea Hills Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Munnar Tea Hills Tour');" />
             <span class="package-badge-category">Tea Hills & Waterfalls</span>
@@ -904,13 +943,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹3,800</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-munnar.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 3: Kodaikanal -->
-        <div class="tour-package-card reveal delay-3" data-open-package="kodaikanal-hills">
+        <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-kodaikanal.png" alt="Kodaikanal Lake Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kodaikanal Lake & Hills');" />
             <span class="package-badge-category">Princess of Hills</span>
@@ -930,13 +969,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹4,200</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-kodaikanal.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 4: Yercaud -->
-        <div class="tour-package-card reveal delay-1" data-open-package="yercaud-hills">
+        <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-coonoor.png" alt="Yercaud Shevaroy Hills Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Yercaud Shevaroy Hills');" />
             <span class="package-badge-category">Weekend Hill Gateway</span>
@@ -956,13 +995,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹4,800</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-yercaud.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 5: Isha Yoga & Vellingiri Hills -->
-        <div class="tour-package-card reveal delay-2" data-open-package="isha-vellingiri">
+        <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-adiyogi.png" alt="Isha Yoga Adiyogi Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Adiyogi Isha Yoga');" />
             <span class="package-badge-category">Spiritual & Wellness</span>
@@ -982,13 +1021,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹1,200</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-isha-yoga.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 6: Kerala Coastal & Beach Special -->
-        <div class="tour-package-card reveal delay-3" data-open-package="kerala-coastal">
+        <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-wayanad.png" alt="Kerala Cherai Alleppey Beach Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kerala Beach & Backwaters');" />
             <span class="package-badge-category">Beaches & Backwaters</span>
@@ -1008,13 +1047,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹4,500</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-kerala-coastal.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 7: Pilgrimage & Heritage Special -->
-        <div class="tour-package-card reveal delay-1" data-open-package="pilgrimage-heritage">
+        <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-madurai.png" alt="Guruvayur Madurai Trichy Temple Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Guruvayur Madurai Pilgrimage');" />
             <span class="package-badge-category">Heritage Pilgrimage</span>
@@ -1034,13 +1073,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹3,800</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-pilgrimage.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 8: Kanyakumari Sunrise Tour -->
-        <div class="tour-package-card reveal delay-2" data-open-package="kanyakumari-sunrise">
+        <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-mysore.png" alt="Kanyakumari Sunrise Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kanyakumari Sunrise Tour');" />
             <span class="package-badge-category">Southern Coast Special</span>
@@ -1060,13 +1099,13 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹10,500</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-kanyakumari.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
 
         <!-- Package 9: Wildlife & Safari Adventure -->
-        <div class="tour-package-card reveal delay-3" data-open-package="wildlife-safari">
+        <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
             <img src="./public/assets/images/dest-valparai.png" alt="Mudumalai Wayanad Calicut Safari Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Mudumalai Wayanad Safari');" />
             <span class="package-badge-category">Wildlife & Safari</span>
@@ -1086,7 +1125,7 @@
                 <span class="package-price-label">Starting Tariff</span>
                 <span class="package-price-val">₹4,200</span>
               </div>
-              <button class="package-view-btn">View Details →</button>
+              <a href="./tour-wildlife-safari.html" class="package-view-btn">View Details →</a>
             </div>
           </div>
         </div>
@@ -1105,7 +1144,7 @@
 
       <div class="blogs-grid">
         <!-- Blog 1 -->
-        <article class="blog-card reveal delay-1" data-open-blog="ooty-guide">
+        <article class="blog-card reveal delay-1">
           <div class="blog-img-box">
             <img 
               src="./public/assets/images/blog-ooty.png" 
@@ -1121,19 +1160,19 @@
               <span>•</span>
               <span>⏱️ 5 min read</span>
             </div>
-            <h3 class="blog-card-title">Top 10 Places to Visit in Ooty from Coimbatore (2026 Cab Guide)</h3>
+            <h3 class="blog-card-title"><a href="./blog-ooty-guide.html" style="color:inherit; text-decoration:none;">Top 10 Places to Visit in Ooty from Coimbatore (2026 Cab Guide)</a></h3>
             <p class="blog-excerpt">
               Planning a trip to Ooty Queen of Hill Stations? Discover the best scenic route via Mettupalayam, hairpin curve tips, and how Oneway Cabs save up to ₹1,200.
             </p>
-            <div class="blog-read-btn">
+            <a href="./blog-ooty-guide.html" class="blog-read-btn">
               <span>Read Full Article</span>
               <span>→</span>
-            </div>
+            </a>
           </div>
         </article>
 
         <!-- Blog 2 -->
-        <article class="blog-card reveal delay-2" data-open-blog="airport-guide">
+        <article class="blog-card reveal delay-2">
           <div class="blog-img-box">
             <img 
               src="./public/assets/images/blog-tips.png" 
@@ -1149,19 +1188,19 @@
               <span>•</span>
               <span>⏱️ 4 min read</span>
             </div>
-            <h3 class="blog-card-title">Coimbatore Airport Taxi Booking: Fast 24/7 Pickups & Fixed Fares</h3>
+            <h3 class="blog-card-title"><a href="./blog-airport-guide.html" style="color:inherit; text-decoration:none;">Coimbatore Airport Taxi Booking: Fast 24/7 Pickups & Fixed Fares</a></h3>
             <p class="blog-excerpt">
               Never miss a flight at CJB Airport! Learn about instant 10-minute pickup guarantees, zero surge pricing at night, and luggage-friendly Sedan options.
             </p>
-            <div class="blog-read-btn">
+            <a href="./blog-airport-guide.html" class="blog-read-btn">
               <span>Read Full Article</span>
               <span>→</span>
-            </div>
+            </a>
           </div>
         </article>
 
         <!-- Blog 3 -->
-        <article class="blog-card reveal delay-3" data-open-blog="oneway-vs-round">
+        <article class="blog-card reveal delay-3">
           <div class="blog-img-box">
             <img 
               src="./public/assets/images/fleet-sedan.png" 
@@ -1177,19 +1216,19 @@
               <span>•</span>
               <span>⏱️ 6 min read</span>
             </div>
-            <h3 class="blog-card-title">Oneway Cabs vs Round Trip Travel: Save Up to 40% On Intercity Travel</h3>
+            <h3 class="blog-card-title"><a href="./blog-oneway-vs-round.html" style="color:inherit; text-decoration:none;">Oneway Cabs vs Round Trip Travel: Save Up to 40% On Intercity Travel</a></h3>
             <p class="blog-excerpt">
               Why pay return kilometer charges when staying in Chennai, Tirupur, or Erode? Compare Oneway fixed billing against traditional daily taxi rentals.
             </p>
-            <div class="blog-read-btn">
+            <a href="./blog-oneway-vs-round.html" class="blog-read-btn">
               <span>Read Full Article</span>
               <span>→</span>
-            </div>
+            </a>
           </div>
         </article>
 
         <!-- Blog 4 -->
-        <article class="blog-card reveal delay-4" data-open-blog="hill-drives">
+        <article class="blog-card reveal delay-4">
           <div class="blog-img-box">
             <img 
               src="./public/assets/images/blog-valparai.png" 
@@ -1205,14 +1244,14 @@
               <span>•</span>
               <span>⏱️ 5 min read</span>
             </div>
-            <h3 class="blog-card-title">Best Hill Station Drives from Coimbatore: Valparai, Kodaikanal & Munnar</h3>
+            <h3 class="blog-card-title"><a href="./blog-hill-drives.html" style="color:inherit; text-decoration:none;">Best Hill Station Drives from Coimbatore: Valparai, Kodaikanal & Munnar</a></h3>
             <p class="blog-excerpt">
               Explore Western Ghats mountain gateways! Complete driver batta breakdown, hill station permit guidelines, and recommended Innova Crysta booking packages.
             </p>
-            <div class="blog-read-btn">
+            <a href="./blog-hill-drives.html" class="blog-read-btn">
               <span>Read Full Article</span>
               <span>→</span>
-            </div>
+            </a>
           </div>
         </article>
       </div>
@@ -1392,18 +1431,19 @@
   </div>
 
 
-  <!-- Floating Action Buttons: Spinning Call CTA + WhatsApp -->
+  <!-- Floating Action Buttons: Floating WhatsApp Button + Spinning Call CTA -->
   <div class="floating-action-stack">
-    <!-- WhatsApp Floating CTA -->
+    <!-- Floating WhatsApp Button -->
     <a 
-      href="https://wa.me/919894020156?text=Hi%20Get%20Cabs,%20I%20want%20to%20book%20a%20taxi%20in%20Coimbatore" 
+      href="https://wa.me/919894020156?text=Hi,%20I%20am%20looking%20to%20book%20a%20cab" 
       target="_blank" 
-      rel="noopener"
-      class="floating-whatsapp-btn"
-      aria-label="Book Taxi via WhatsApp"
+      rel="noopener" 
+      class="floating-whatsapp-btn" 
+      aria-label="Chat on WhatsApp"
     >
-      <span class="whatsapp-pulse-dot"></span>
-      <span>💬 WhatsApp Booking</span>
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="#ffffff">
+        <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 001.333 4.993L2 22l5.233-1.237a9.96 9.96 0 004.779 1.221h.005c5.505 0 9.988-4.478 9.989-9.984 0-2.669-1.038-5.176-2.925-7.062A9.925 9.925 0 0012.012 2zm5.835 14.373c-.247.691-1.229 1.264-1.992 1.432-.524.115-1.209.208-3.513-.746-2.946-1.22-4.845-4.225-4.992-4.423-.146-.197-1.198-1.593-1.198-3.038 0-1.445.757-2.155 1.026-2.448.269-.294.587-.367.784-.367.197 0 .393.002.564.01.182.008.428-.069.668.508.247.592.835 2.039.907 2.187.073.148.122.322.025.516-.098.195-.147.316-.293.488-.147.172-.309.384-.442.516-.147.147-.301.307-.129.602.172.294.766 1.265 1.644 2.046 1.129 1.004 2.08 1.316 2.375 1.463.295.148.466.123.638-.073.172-.196.737-.858.934-1.152.196-.295.393-.245.663-.147.27.098 1.716.81 2.011.956.295.148.491.221.564.343.073.123.073.714-.174 1.405z"/>
+      </svg>
     </a>
 
     <!-- Spinning Call Button -->
@@ -1448,10 +1488,10 @@
       <div class="chat-header-info">
         <div class="chat-avatar">🤖</div>
         <div>
-          <div class="chat-title-text">Get Cabs AI Assistant</div>
+          <div class="chat-title-text">Get Cabs AI Assistant <span style="font-size:0.75rem; background:rgba(255,255,255,0.2); padding:2px 6px; border-radius:4px; margin-left:4px;">Gemini Mini</span></div>
           <div class="chat-status-badge">
             <span style="width:6px; height:6px; background:#4ade80; border-radius:50%; display:inline-block;"></span> 
-            24/7 AI Dispatcher
+            24/7 Dispatch & Price Math Expert
           </div>
         </div>
       </div>
@@ -1459,14 +1499,15 @@
     </div>
     <div class="chat-body" id="chat-messages">
       <div class="chat-msg bot">
-        👋 Hello! I am <strong>Get Cabs AI Assistant</strong>, powered by real Gemini AI & live search grounding. Ask me anything about Ooty hill trips, Munnar packages, live weather, flight status, airport drops, or taxi tariffs!
+        👋 Hello! I am <strong>Get Cabs AI Assistant (Gemini Mini)</strong>. I know every price, route, price calculation math, vehicle type, and policy of Get Cabs Coimbatore. Ask me any travel or fare question!
       </div>
       <div class="chat-chips-wrap">
-        <button class="chat-chip" onclick="window.sendAiQuery('Ooty hill road cab fare and distance from Coimbatore')">☀️ Ooty Cab Fare & Weather</button>
-        <button class="chat-chip" onclick="window.sendAiQuery('Coimbatore Airport CJB pickup rates and speed')">🛫 Airport Drop Fares</button>
-        <button class="chat-chip" onclick="window.sendAiQuery('Why choose Get Cabs in Coimbatore?')">⭐ Why Get Cabs</button>
-        <button class="chat-chip" onclick="window.sendAiQuery('Munnar tea hills 2 day tour itinerary and tariff')">🏞️ Munnar Hill Tour</button>
-        <button class="chat-chip" onclick="window.sendAiQuery('Adiyogi Shiva temple drop fare and waiting rates')">🕉️ Adiyogi Shiva Trip</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('How are cab prices calculated in Get Cabs? Show price maths')">📐 Price Calculation Maths</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('Ooty cab fare, 36 hairpin curves, and e-pass rules')">🌲 Ooty Fare & Hill Rules</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('Hourly and 10 Hours / 100 KM Day Rental packages')">⏱️ Hourly Packages</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('Coimbatore Airport CJB pickup and drop rates to Tiruppur & Palakkad')">🛫 Airport Drops</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('Isha Yoga Adiyogi Shiva cab fare and laser show timing')">🕉️ Adiyogi Isha Drop</button>
+        <button class="chat-chip" onclick="window.sendAiQuery('Valparai 40 hairpin curves tour rates and vehicle options')">⛰️ Valparai 40 Curves</button>
       </div>
     </div>
     <div class="chat-footer">
