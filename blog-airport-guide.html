@@ -14,9 +14,9 @@
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coimbatore Airport Taxi Booking: Fast 24/7 Pickups & Fixed Fares | Get Cabs Blog</title>
-  <meta name="description" content="Guide to Coimbatore Airport (CJB) taxi booking in Peelamedu. 24/7 flight monitoring, zero waiting fees, doorstep pickup to Tiruppur, Ooty, Palakkad & city hubs." />
-  <meta name="keywords" content="Coimbatore airport taxi, CJB airport cab booking, Peelamedu airport taxi fare, airport taxi to Ooty Tiruppur" />
+  <title>Coimbatore Airport (CJB) Taxi Booking Guide: Fast 10-Min Pickups & Fixed Rates | Get Cabs</title>
+  <meta name="description" content="Complete guide to booking taxis from Coimbatore International Airport (CJB). Fixed rates to Gandhipuram, Tiruppur, Palakkad & Ooty with zero surge pricing." />
+  <meta name="keywords" content="Coimbatore airport taxi, CJB airport cab booking, Coimbatore airport to Tiruppur taxi, Coimbatore airport to Ooty cab, Peelamedu airport taxi fare" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.getcabs.in/blog-airport-guide.html" />
 
@@ -27,139 +27,128 @@
 
   <script>
     window.getFallbackSvg = function(title) {
-      const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Get Cabs Airport Guide';
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-        <rect width="600" height="400" fill="#0f172a"/>
-        <text x="300" y="200" font-family="sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">${cleanTitle}</text>
-      </svg>`;
+      const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Airport Taxi Guide';
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="600" height="400" fill="#0f172a"/><text x="300" y="200" font-family="sans-serif" font-size="20" fill="#ffffff" text-anchor="middle">${cleanTitle}</text></svg>`;
       return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
     };
     window.handleImgError = function(imgEl, title) {
       if (!imgEl) return;
       imgEl.onerror = null;
-      imgEl.src = window.getFallbackSvg(title || imgEl.alt || 'Get Cabs Blog');
+      imgEl.src = window.getFallbackSvg(title || imgEl.alt || 'Get Cabs');
     };
   </script>
 </head>
 <body>
-  <header class="header-main" id="header-bar">
-    <div class="container header-container">
-      <a href="./index.html" class="logo">
-        <span class="logo-icon">🚕</span>
-        <div class="logo-text">
-          <span class="brand-name">GET <span class="highlight">CABS</span></span>
-          <span class="brand-tagline">Coimbatore 24/7 Taxi</span>
+  <!-- Header -->
+  <header class="header-nav">
+    <div class="container">
+      <a href="./index.html" class="brand-logo">
+        <div class="logo-svg-wrap" style="width:40px; height:40px; background:var(--brand-red); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">
+          🚕
+        </div>
+        <div class="brand-text-block">
+          <div class="brand-name">GET <span class="highlight">CABS</span></div>
+          <div class="brand-tagline">COIMBATORE TAXI SERVICE</div>
         </div>
       </a>
       <nav>
         <ul class="main-menu">
           <li><a href="./index.html">Home</a></li>
-          <li><a href="./index.html#booking-form-section">Book Ride</a></li>
-          <li><a href="./index.html#tour-packages">Tour Packages</a></li>
-          <li><a href="./index.html#blogs" class="active">Blogs</a></li>
-          <li><a href="./index.html#tariff">Tariff Card</a></li>
-          <li><a href="./index.html#contact-us">Contact</a></li>
+          <li><a href="./routes.html">Routes</a></li>
+          <li><a href="./tariffs.html">Tariff Card</a></li>
+          <li><a href="./blogs.html" class="active">Blogs</a></li>
+          <li><a href="./contact.html">Contact</a></li>
         </ul>
       </nav>
-      <div class="header-actions">
-        <a href="tel:9894020156" class="btn btn-phone">
-          <span class="phone-icon">📞</span>
-          <span class="phone-num">9894020156</span>
-        </a>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <a href="tel:9894020156" class="call-btn-head"><span>📞</span><span>9894020156</span></a>
       </div>
     </div>
   </header>
 
-  <main class="page-main-wrap" style="padding-top: 100px; padding-bottom: 60px;">
+  <!-- Main Content -->
+  <main class="page-main-wrap" style="padding: 40px 0 80px 0; background:#f8fafc;">
     <div class="container">
-      <nav class="breadcrumb-nav" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-muted);">
-        <a href="./index.html" style="color: var(--brand-red);">Home</a> &gt; 
-        <a href="./index.html#blogs" style="color: var(--brand-red);">Blogs</a> &gt; 
-        <span>Coimbatore Airport Taxi Booking</span>
+      <nav class="breadcrumb-nav" style="margin-bottom: 20px; font-size: 0.9rem; color: #475569;">
+        <a href="./index.html" style="color: var(--brand-red); font-weight:700;">Home</a> &gt; 
+        <a href="./blogs.html" style="color: var(--brand-red); font-weight:700;">Blogs</a> &gt; 
+        <span style="font-weight:700; color:#0f172a;">Coimbatore Airport Taxi Guide</span>
       </nav>
 
-      <article class="blog-post-article" style="background:#0f172a; border:1px solid rgba(255,255,255,0.1); border-radius:16px; padding:32px; color:#f8fafc;">
-        <header class="blog-header" style="margin-bottom:24px;">
-          <span class="blog-tag-badge">Airport Taxi Guide</span>
-          <h1 style="font-size:2.2rem; font-family:'Outfit',sans-serif; margin:12px 0; color:#ffffff;">Coimbatore Airport Taxi Booking: Fast 24/7 Pickups & Fixed Fares</h1>
-          <div style="font-size:0.9rem; color:#94a3b8; display:flex; gap:16px;">
-            <span>📅 Published: Feb 02, 2026</span>
-            <span>⏱️ Read Time: 5 min</span>
-            <span>✍️ By Get Cabs Operations Desk</span>
-          </div>
-        </header>
+      <article class="guide-section-box" style="background:#ffffff; border-radius:16px; padding:36px; border:1px solid #e2e8f0;">
+        <span class="badge" style="background:#3b82f6; color:#ffffff; font-weight:800;">Airport Transfers</span>
+        <h1 style="font-size: 2.2rem; font-family:var(--font-display); font-weight:900; color:#0f172a; margin: 12px 0 16px 0; line-height:1.25;">
+          Coimbatore Airport (CJB) Taxi Guide: Fast 10-Min Pickups, Rates & Luggage Tips (2026)
+        </h1>
+        <div style="font-size:0.9rem; color:#64748b; margin-bottom:24px; display:flex; gap:16px; flex-wrap:wrap;">
+          <span>📅 Published: Feb 02, 2026</span>
+          <span>⏱️ Read Time: 5 min</span>
+          <span>✍️ By Get Cabs CJB Airport Desk</span>
+        </div>
 
-        <div class="blog-body" style="line-height:1.8; font-size:1.05rem;">
-          <p>Coimbatore International Airport (CJB) in Peelamedu is the primary gateway for air travelers heading to Coimbatore, Tiruppur textile hubs, Palakkad, and hill stations like Ooty, Coonoor, and Valparai. Finding a reliable, prompt, and reasonably priced airport taxi can make all the difference after a tiring flight.</p>
+        <img src="./public/assets/images/dest-cjb-airport.webp" alt="Coimbatore Airport Taxi" onerror="handleImgError(this, 'CJB Airport Taxi')" style="width:100%; max-height:400px; object-fit:cover; border-radius:12px; margin-bottom:28px;" />
 
-          <h3 style="color:var(--brand-yellow); margin-top:28px;">Why Book Pre-Arranged Airport Cabs vs On-Spot Terminal Rentals?</h3>
-          <p>On-spot terminal taxis often quote exorbitant surge pricing or require long queues during peak arrival hours. With Get Cabs Coimbatore, your driver is assigned well before your flight touches down, monitoring live flight status for delays so you walk straight into an air-conditioned cab at the arrivals pickup lane.</p>
+        <div class="policy-doc">
+          <p>
+            Arriving at Coimbatore International Airport (CJB) in Peelamedu? Whether you are a business traveler heading to Tiruppur or a family taking an early morning vacation to Ooty or Munnar, navigating airport transportation doesn't need to be stressful.
+          </p>
 
-          <h3 style="color:var(--brand-yellow); margin-top:28px;">Popular Airport Transfer Routes & Fixed Rates</h3>
+          <h3>1. How to Pre-Book CJB Airport Pickup with Get Cabs</h3>
+          <p>
+            Avoid waiting in long prepaid taxi queues or dealing with unpredictable surge multipliers from app aggregators. When you book with Get Cabs:
+          </p>
           <ul>
-            <li><strong>CJB Airport to Gandhipuram / RS Puram:</strong> Flat rate starting at ₹350</li>
-            <li><strong>CJB Airport to Saravanampatti IT Corridor:</strong> Flat rate starting at ₹450</li>
-            <li><strong>CJB Airport to Tiruppur Town (46 KM):</strong> Fixed one-way drop at ₹1,700</li>
-            <li><strong>CJB Airport to Palakkad Kerala (61 KM):</strong> Fixed one-way drop at ₹2,200</li>
-            <li><strong>CJB Airport to Ooty Hill Station (87 KM):</strong> Fixed one-way drop at ₹3,500</li>
+            <li><strong>Flight Tracking:</strong> Provide your flight number (e.g. 6E 6124 / AI 547), and our dispatch team monitors flight delays automatically.</li>
+            <li><strong>Name Board Meet & Greet:</strong> Our chauffeur waits at the arrival exit canopy with your name board and helps load heavy luggage.</li>
+            <li><strong>Zero Delay Guarantee:</strong> Cabs are stationed right at the Avinashi Road pickup zone for guaranteed under 10-minute dispatch.</li>
           </ul>
 
-          <div class="guide-section-box" style="margin-top:28px;">
-            <h3>✈️ Flight Delay Protection Guarantee</h3>
-            <p>If your domestic or international flight is delayed due to weather or air traffic, Get Cabs automatically adjusts your pickup time with zero waiting penalty fee!</p>
+          <h3>2. Flat Fare Airport Drop Rates (2026 Updated)</h3>
+          <div style="overflow-x:auto; margin:16px 0;">
+            <table style="width:100%; border-collapse:collapse; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px;">
+              <thead>
+                <tr style="background:#0f172a; color:#ffffff; text-align:left;">
+                  <th style="padding:10px;">Airport (CJB) To</th>
+                  <th style="padding:10px;">Distance</th>
+                  <th style="padding:10px;">Sedan (AC)</th>
+                  <th style="padding:10px;">SUV (Innova/Ertiga)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Gandhipuram / RS Puram</td><td>11 - 13 KM</td><td><strong>₹600</strong></td><td>₹900</td></tr>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Coimbatore Railway Junction</td><td>12 KM</td><td><strong>₹600</strong></td><td>₹900</td></tr>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Isha Yoga Center (Adiyogi)</td><td>42 KM</td><td><strong>₹1,400</strong></td><td>₹2,100</td></tr>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Tiruppur City / Exporters Hub</td><td>46 KM</td><td><strong>₹1,700</strong></td><td>₹2,400</td></tr>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Palakkad (Kerala)</td><td>61 KM</td><td><strong>₹2,200</strong></td><td>₹3,100</td></tr>
+                <tr style="border-bottom:1px solid #cbd5e1;"><td>Ooty Hill Station</td><td>94 KM</td><td><strong>₹3,600</strong></td><td>₹4,900</td></tr>
+              </tbody>
+            </table>
           </div>
-        </div>
 
-        <div class="blog-cta-banner" style="margin-top:32px;">
-          <h3>Arriving at Coimbatore Airport?</h3>
-          <p style="margin-bottom:16px;">Book your CJB airport taxi now for 5-minute terminal pickup!</p>
-          <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-            <a href="tel:9894020156" class="btn btn-yellow" style="padding:12px 24px;">📞 Call 9894020156</a>
-            <a href="https://wa.me/919894020156?text=Hi%20Get%20Cabs,%20I%20need%20Airport%20Taxi%20Pickup" target="_blank" class="btn btn-red" style="padding:12px 24px; background:#25d366; border-color:#25d366;">💬 WhatsApp Booking</a>
+          <div class="blog-cta-banner">
+            <h3>Arriving at Coimbatore Airport Soon?</h3>
+            <p style="color:#e2e8f0; margin-bottom:16px;">Call our airport operations desk for instant confirmation.</p>
+            <a href="tel:9894020156" class="btn btn-yellow" style="padding:12px 28px; font-weight:800;">📞 Call 9894020156 (24x7 CJB Desk)</a>
           </div>
-        </div>
-
-        <div style="margin-top: 30px; text-align: center;">
-          <a href="./index.html#blogs" class="btn btn-secondary">← Back to All Articles</a>
         </div>
       </article>
     </div>
   </main>
 
-  <footer class="footer-main">
+  <!-- Footer -->
+  <footer style="background:#0f172a; color:#cbd5e1; padding:40px 0 90px 0; text-align:center;">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col brand-col">
-          <div class="footer-logo">
-            <span class="logo-icon">🚕</span>
-            <span class="brand-name">GET <span class="highlight">CABS</span></span>
-          </div>
-          <p>Coimbatore's trusted 24/7 call taxi network. Offering instant city rides, airport pickups, and outstation tours with zero surge pricing.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="./index.html">Home</a></li>
-            <li><a href="./index.html#booking-form-section">Book Ride</a></li>
-            <li><a href="./index.html#tour-packages">Tour Packages</a></li>
-            <li><a href="./index.html#blogs">Blogs</a></li>
-            <li><a href="./index.html#tariff">Tariff Card</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Contact & Hotline</h4>
-          <p><strong>24/7 Dispatch Desk:</strong></p>
-          <p><a href="tel:9894020156" style="color:var(--brand-yellow); font-weight:700; font-size:1.1rem;">📞 9894020156</a></p>
-          <p>Email: <a href="mailto:booking@getcabs.in">booking@getcabs.in</a></p>
-          <p>Coimbatore, Tamil Nadu 641001</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 Get Cabs Coimbatore. All Rights Reserved.</p>
-      </div>
+      <p>© 2026 Get Cabs Coimbatore. 24x7 Airport Taxi Helpline: <a href="tel:9894020156" style="color:var(--brand-yellow); font-weight:800;">9894020156</a></p>
     </div>
   </footer>
 
-  <script type="module" src="./script.js"></script>
+  <!-- App-Style Bottom Navigation Dock -->
+  <nav class="bottom-app-dock" id="bottom-app-dock">
+    <a href="./index.html#booking-form-section" class="dock-item highlight-dock"><span class="dock-item-icon">🚖</span><span>Book Now</span></a>
+    <a href="./routes.html" class="dock-item"><span class="dock-item-icon">🗺️</span><span>Routes</span></a>
+    <a href="./tariffs.html" class="dock-item"><span class="dock-item-icon">📊</span><span>Tariff</span></a>
+    <a href="./blogs.html" class="dock-item active" style="color:var(--brand-red);"><span class="dock-item-icon">📰</span><span>Blogs</span></a>
+    <a href="tel:9894020156" class="dock-item"><span class="dock-item-icon">📞</span><span>Call 24x7</span></a>
+  </nav>
 </body>
 </html>
