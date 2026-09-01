@@ -881,85 +881,96 @@ document.addEventListener('DOMContentLoaded', function () {
     revealElements.forEach(el => el.classList.add('revealed'));
   }
 
-  // 8. Dynamic Ambient Highway Motion Engine (Canvas Fallback & Backdrop)
-  const heroCanvas = document.getElementById('hero-canvas');
-  if (heroCanvas) {
-    const ctx = heroCanvas.getContext('2d');
-    let width, height;
+  // 8. Deferred Non-Critical Features (Canvas, Video, Chatbot, Modals, Spin Wheel)
+  let deferredInitialized = false;
+  let realOpenDedicatedPage = null;
 
-    function resizeCanvas() {
-      if (!heroCanvas.parentElement) return;
-      width = heroCanvas.width = heroCanvas.parentElement.clientWidth || window.innerWidth;
-      height = heroCanvas.height = heroCanvas.parentElement.clientHeight || 500;
+  window.openDedicatedPage = function(pageKey, blogKey, packageKey) {
+    if (!deferredInitialized) initDeferredFeatures();
+    if (typeof realOpenDedicatedPage === 'function') {
+      realOpenDedicatedPage(pageKey, blogKey, packageKey);
     }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+  };
 
-    // Highway streaks particles
-    const streaks = [];
-    const numStreaks = 45;
-    for (let i = 0; i < numStreaks; i++) {
-      streaks.push({
-        x: Math.random() * 2 - 1,
-        y: Math.random(),
-        z: Math.random() * 0.9 + 0.1,
-        speed: Math.random() * 0.015 + 0.008,
-        color: Math.random() > 0.4 ? 'rgba(217, 4, 41, ' : (Math.random() > 0.5 ? 'rgba(255, 183, 3, ' : 'rgba(255, 255, 255, '),
-        length: Math.random() * 80 + 40
-      });
-    }
+  function initDeferredFeatures() {
+    if (deferredInitialized) return;
+    deferredInitialized = true;
 
-    function renderHighway() {
-      if (!ctx || width === 0) return;
-      ctx.clearRect(0, 0, width, height);
+    // 8a. Dynamic Ambient Highway Motion Engine (Canvas Fallback & Backdrop)
+    const heroCanvas = document.getElementById('hero-canvas');
+    if (heroCanvas) {
+      const ctx = heroCanvas.getContext('2d');
+      let width, height;
 
-      // Deep night sky background
-      const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
-      skyGrad.addColorStop(0, '#0b1329');
-      skyGrad.addColorStop(0.5, '#111827');
-      skyGrad.addColorStop(1, '#080d1a');
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(0, 0, width, height);
+      function resizeCanvas() {
+        if (!heroCanvas.parentElement) return;
+        width = heroCanvas.width = heroCanvas.parentElement.clientWidth || window.innerWidth;
+        height = heroCanvas.height = heroCanvas.parentElement.clientHeight || 500;
+      }
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
 
-      // Vanishing point (center horizon)
-      const cx = width / 2;
-      const cy = height * 0.35;
+      // Highway streaks particles
+      const streaks = [];
+      const numStreaks = 45;
+      for (let i = 0; i < numStreaks; i++) {
+        streaks.push({
+          x: Math.random() * 2 - 1,
+          y: Math.random(),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.015 + 0.008,
+          color: Math.random() > 0.4 ? 'rgba(217, 4, 41, ' : (Math.random() > 0.5 ? 'rgba(255, 183, 3, ' : 'rgba(255, 255, 255, '),
+          length: Math.random() * 80 + 40
+        });
+      }
 
-      // Perspective Road Base
-      ctx.beginPath();
-      ctx.moveTo(cx - width * 0.1, cy);
-      ctx.lineTo(cx + width * 0.1, cy);
-      ctx.lineTo(width * 1.2, height);
-      ctx.lineTo(-width * 0.2, height);
-      ctx.closePath();
-      ctx.fillStyle = '#0f172a';
-      ctx.fill();
+      function renderHighway() {
+        if (!ctx || width === 0) return;
+        ctx.clearRect(0, 0, width, height);
 
-      // Highway Lane Markings & Glowing Streaks
-      streaks.forEach(s => {
-        s.y += s.speed;
-        if (s.y > 1) {
-          s.y = 0;
-          s.x = Math.random() * 2 - 1;
-        }
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+        skyGrad.addColorStop(0, '#0b1329');
+        skyGrad.addColorStop(0.5, '#111827');
+        skyGrad.addColorStop(1, '#080d1a');
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, width, height);
 
-        const px = cx + (s.x * (s.y * width * 0.6));
-        const py = cy + (s.y * (height - cy));
-        const pLength = s.length * s.y;
-        const opacity = Math.min(s.y * 1.5, 0.9);
+        const cx = width / 2;
+        const cy = height * 0.35;
 
         ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(px + (s.x * pLength * 0.2), py + pLength);
-        ctx.strokeStyle = `${s.color}${opacity})`;
-        ctx.lineWidth = Math.max(1, s.y * 5);
-        ctx.stroke();
-      });
+        ctx.moveTo(cx - width * 0.1, cy);
+        ctx.lineTo(cx + width * 0.1, cy);
+        ctx.lineTo(width * 1.2, height);
+        ctx.lineTo(-width * 0.2, height);
+        ctx.closePath();
+        ctx.fillStyle = '#0f172a';
+        ctx.fill();
 
-      requestAnimationFrame(renderHighway);
+        streaks.forEach(s => {
+          s.y += s.speed;
+          if (s.y > 1) {
+            s.y = 0;
+            s.x = Math.random() * 2 - 1;
+          }
+
+          const px = cx + (s.x * (s.y * width * 0.6));
+          const py = cy + (s.y * (height - cy));
+          const pLength = s.length * s.y;
+          const opacity = Math.min(s.y * 1.5, 0.9);
+
+          ctx.beginPath();
+          ctx.moveTo(px, py);
+          ctx.lineTo(px + (s.x * pLength * 0.2), py + pLength);
+          ctx.strokeStyle = `${s.color}${opacity})`;
+          ctx.lineWidth = Math.max(1, s.y * 5);
+          ctx.stroke();
+        });
+
+        requestAnimationFrame(renderHighway);
+      }
+      renderHighway();
     }
-    renderHighway();
-  }
 
   // 9. Ensure Background Video Autoplay & Fallback Handling
   const heroVideo = document.getElementById('hero-video');
@@ -2439,7 +2450,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   };
 
-  function openDedicatedPage(pageKey, blogKey = null, packageKey = null) {
+  realOpenDedicatedPage = function(pageKey, blogKey = null, packageKey = null) {
     if (!pageOverlay || !pageTitleEl || !pageContentEl) return;
 
     if (packageKey && TOUR_PACKAGES_DATA[packageKey]) {
@@ -3010,6 +3021,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // End of initialization
-});
+  } // End of initDeferredFeatures
+
+  // Schedule deferred features when browser is idle (zero Total Blocking Time on load)
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initDeferredFeatures, { timeout: 1200 });
+  } else {
+    setTimeout(initDeferredFeatures, 60);
+  }
+
+  // Also initialize immediately if user interacts before idle
+  ['scroll', 'touchstart', 'mousemove', 'click', 'keydown'].forEach(evt => {
+    window.addEventListener(evt, initDeferredFeatures, { once: true, passive: true });
+  });
+
+}); // End of DOMContentLoaded
 
