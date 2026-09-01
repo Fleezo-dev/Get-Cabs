@@ -23,7 +23,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Get Cabs Coimbatore: Reliable Local & Outstation Taxi Service 2026" />
   <meta property="og:description" content="Transparent flat-rate pricing, zero signal-wait meter fees, and expert local Kovai drivers available 24/7." />
-  <meta property="og:image" content="./public/assets/images/dest-ooty.png" />
+  <meta property="og:image" content="./public/assets/images/dest-ooty.webp" />
   <meta property="og:locale" content="en_IN" />
   <meta name="geo.region" content="IN-TN" />
   <meta name="geo.placename" content="Coimbatore" />
@@ -39,8 +39,8 @@
       "@id": "https://www.getcabs.in/#business",
       "name": "Get Cabs Coimbatore",
       "alternateName": ["Get Cabs Taxi Service 9894020156", "Get Cabs Kovai", "Get Cabs Tour Packages"],
-      "image": "https://www.getcabs.in/public/assets/images/dest-ooty.png",
-      "logo": "https://www.getcabs.in/public/assets/images/dest-ooty.png",
+      "image": "https://www.getcabs.in/public/assets/images/dest-ooty.webp",
+      "logo": "https://www.getcabs.in/public/assets/images/dest-ooty.webp",
       "description": "Coimbatore's premier 24/7 call taxi service offering Local City Rides, Oneway Cabs to Ooty, Pollachi, Tirupur, Erode, Outstation Round Trips, and Airport Taxi drops.",
       "telephone": "+919894020156",
       "email": "booking@getcabs.in",
@@ -102,13 +102,92 @@
     }
   ]
   </script>
-  <!-- Premium Google Fonts -->
+  <!-- Non-blocking Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <!-- Pure CSS Stylesheet -->
-  <link rel="stylesheet" href="./style.css" />
-  <link rel="preload" as="image" href="./public/assets/images/dest-ooty.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
+
+  <!-- Preload LCP Hero WebP Background Image -->
+  <link rel="preload" as="image" href="./public/assets/images/dest-ooty.webp" type="image/webp" />
+
+  <!-- Critical Above-The-Fold CSS -->
+  <style id="critical-css">
+    :root {
+      --brand-red: #d90429;
+      --brand-red-dark: #ef233c;
+      --brand-yellow: #ffb703;
+      --brand-dark: #111827;
+      --brand-gray-dark: #1f2937;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --bg-light: #f8fafc;
+      --bg-card: #ffffff;
+      --border-color: #e5e7eb;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-display: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+      --container-max: 1240px;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+      --transition: all 0.25s ease-in-out;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-sans); color: var(--text-main); background-color: #f3f4f6; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; transition: var(--transition); }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    .container { width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 20px; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 24px; font-size: 1rem; font-weight: 700; border-radius: var(--radius-sm); border: 2px solid transparent; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+    .btn-red { background-color: var(--brand-red); color: #ffffff; }
+    .btn-yellow { background-color: var(--brand-yellow); color: var(--brand-dark); }
+    .badge { display: inline-block; padding: 4px 12px; background-color: rgba(217, 4, 41, 0.1); color: var(--brand-red); font-size: 0.85rem; font-weight: 700; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .top-bar { background-color: var(--brand-dark); color: #d1d5db; font-size: 0.875rem; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .top-bar .container { display: flex; justify-content: space-between; align-items: center; }
+    .top-contacts { display: flex; gap: 24px; }
+    .top-contacts a { display: flex; align-items: center; gap: 6px; color: #f3f4f6; font-weight: 600; }
+    .top-promo { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
+    .header-nav { position: sticky; top: 0; z-index: 1000; background-color: #ffffff; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); padding: 10px 0; border-bottom: 1px solid #e2e8f0; }
+    .header-nav .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; position: relative; }
+    .brand-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .brand-name { font-family: var(--font-display); font-size: 1.6rem; font-weight: 900; color: var(--brand-dark); letter-spacing: -0.5px; white-space: nowrap; }
+    .brand-name .highlight { color: var(--brand-red); }
+    .brand-tagline { font-family: var(--font-display); font-size: 0.6rem; font-weight: 800; color: var(--text-muted); letter-spacing: 2px; margin-top: 2px; }
+    .main-menu { display: flex; align-items: center; gap: 18px; margin: 0; padding: 0; list-style: none; }
+    .main-menu a { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; color: var(--brand-dark); padding: 6px 0; position: relative; letter-spacing: -0.2px; white-space: nowrap; }
+    .call-btn-head { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(--brand-yellow) 0%, #f59e0b 100%); color: var(--brand-dark); padding: 9px 16px; border-radius: var(--radius-sm); font-family: var(--font-display); font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 14px rgba(255, 183, 3, 0.4); transition: var(--transition); white-space: nowrap; }
+    .mobile-toggle { display: none; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: var(--radius-sm); width: 42px; height: 42px; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; color: var(--brand-dark); }
+    .hero-booking-section { position: relative; overflow: hidden; background-color: #0f172a; background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.70) 0%, rgba(15, 23, 42, 0.58) 50%, rgba(15, 23, 42, 0.85) 100%), url('./public/assets/images/dest-ooty.webp'); background-size: cover; background-position: center center; background-repeat: no-repeat; color: #ffffff; padding: 44px 0 64px 0; }
+    .hero-booking-section .container { position: relative; z-index: 10; }
+    .hero-header-text { text-align: center; margin-bottom: 24px; }
+    .hero-header-text h1 { font-family: var(--font-display); font-size: 2.6rem; font-weight: 900; line-height: 1.2; margin-bottom: 8px; letter-spacing: -0.5px; }
+    .hero-header-text h1 span { color: var(--brand-yellow); }
+    .hero-header-text p { font-size: 1.1rem; color: #e5e7eb; }
+    .main-booking-box { background: #ffffff; color: var(--text-main); border-radius: var(--radius-lg); padding: 24px 30px 30px 30px; box-shadow: var(--shadow-lg); border: 3px solid var(--brand-yellow); max-width: 1100px; margin: 0 auto; }
+    .ride-tabs-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background-color: #f3f4f6; padding: 6px; border-radius: var(--radius-md); margin-bottom: 24px; }
+    .tab-link { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 10px; font-size: 1rem; font-weight: 800; border: none; background: transparent; color: var(--brand-gray-dark); border-radius: var(--radius-sm); cursor: pointer; transition: var(--transition); text-align: center; }
+    .tab-link.active { background-color: var(--brand-red); color: #ffffff; box-shadow: 0 4px 10px rgba(217, 4, 41, 0.25); }
+    .tab-content-panel { display: none; }
+    .tab-content-panel.active { display: block; }
+    .form-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: end; }
+    .form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: end; }
+    .form-grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; align-items: end; }
+    .field-group { display: flex; flex-direction: column; }
+    .field-group label { font-size: 0.85rem; font-weight: 800; color: var(--brand-dark); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .input-ctrl { width: 100%; padding: 12px 14px; font-size: 0.95rem; border: 1px solid #d1d5db; border-radius: var(--radius-sm); background-color: #f9fafb; outline: none; transition: var(--transition); font-family: inherit; color: var(--brand-dark); }
+    @media (min-width: 1101px) { .menu-divider, .drawer-section-title, .secondary-links-grid, .mobile-only-drawer { display: none !important; } }
+    @media (max-width: 1100px) { .top-bar { display: none; } .main-menu { display: none; } .mobile-toggle { display: flex !important; } .form-grid-4, .form-grid-5 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .ride-tabs-nav { grid-template-columns: repeat(2, 1fr); } .form-grid-3, .form-grid-4, .form-grid-5 { grid-template-columns: 1fr; } .hero-header-text h1 { font-size: 1.8rem; } }
+  </style>
+
+  <!-- Non-blocking Full Stylesheet -->
+  <link rel="preload" href="./style.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="./style.css" /></noscript>
   <script>
     window.getFallbackSvg = function(title) {
       const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Get Cabs Coimbatore';
@@ -831,7 +910,7 @@
 
         <div class="info-image-wrap reveal delay-2">
           <img 
-            src="./public/assets/images/coimbatore-local-cab.png" width="600" height="400" loading="lazy" 
+            src="./public/assets/images/coimbatore-local-cab.webp" width="600" height="400" loading="lazy" 
             alt="Coimbatore Local & Adiyogi Cab Get Cabs" 
             referrerpolicy="no-referrer"
             onerror="window.handleImgError(this, 'Coimbatore & Adiyogi Shiva');"
@@ -903,7 +982,7 @@
         <!-- Package 1: Ooty, Coonoor & Kotagiri -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-ooty.png" width="400" height="250" loading="lazy" alt="Ooty Coonoor Kotagiri Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Ooty Coonoor Nilgiris Tour');" />
+            <img src="./public/assets/images/dest-ooty.webp" width="400" height="250" loading="lazy" alt="Ooty Coonoor Kotagiri Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Ooty Coonoor Nilgiris Tour');" />
             <span class="package-badge-category">Nilgiris Hill Special</span>
             <span class="package-duration-pill">⏱️ Full Day / 2 Days</span>
           </div>
@@ -929,7 +1008,7 @@
         <!-- Package 2: Munnar -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-munnar.png" width="400" height="250" loading="lazy" alt="Munnar Tea Hills Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Munnar Tea Hills Tour');" />
+            <img src="./public/assets/images/dest-munnar.webp" width="400" height="250" loading="lazy" alt="Munnar Tea Hills Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Munnar Tea Hills Tour');" />
             <span class="package-badge-category">Tea Hills & Waterfalls</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -955,7 +1034,7 @@
         <!-- Package 3: Kodaikanal -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-kodaikanal.png" width="400" height="250" loading="lazy" alt="Kodaikanal Lake Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kodaikanal Lake & Hills');" />
+            <img src="./public/assets/images/dest-kodaikanal.webp" width="400" height="250" loading="lazy" alt="Kodaikanal Lake Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kodaikanal Lake & Hills');" />
             <span class="package-badge-category">Princess of Hills</span>
             <span class="package-duration-pill">⏱️ Full Day / 2 Days</span>
           </div>
@@ -981,7 +1060,7 @@
         <!-- Package 4: Yercaud -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-coonoor.png" width="400" height="250" loading="lazy" alt="Yercaud Shevaroy Hills Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Yercaud Shevaroy Hills');" />
+            <img src="./public/assets/images/dest-coonoor.webp" width="400" height="250" loading="lazy" alt="Yercaud Shevaroy Hills Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Yercaud Shevaroy Hills');" />
             <span class="package-badge-category">Weekend Hill Gateway</span>
             <span class="package-duration-pill">⏱️ Full Day Tour</span>
           </div>
@@ -1007,7 +1086,7 @@
         <!-- Package 5: Isha Yoga & Vellingiri Hills -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-adiyogi.png" width="400" height="250" loading="lazy" alt="Isha Yoga Adiyogi Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Adiyogi Isha Yoga');" />
+            <img src="./public/assets/images/dest-adiyogi.webp" width="400" height="250" loading="lazy" alt="Isha Yoga Adiyogi Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Adiyogi Isha Yoga');" />
             <span class="package-badge-category">Spiritual & Wellness</span>
             <span class="package-duration-pill">⏱️ Half Day / Full Day</span>
           </div>
@@ -1033,7 +1112,7 @@
         <!-- Package 6: Kerala Coastal & Beach Special -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-wayanad.png" width="400" height="250" loading="lazy" alt="Kerala Cherai Alleppey Beach Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kerala Beach & Backwaters');" />
+            <img src="./public/assets/images/dest-wayanad.webp" width="400" height="250" loading="lazy" alt="Kerala Cherai Alleppey Beach Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kerala Beach & Backwaters');" />
             <span class="package-badge-category">Beaches & Backwaters</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1059,7 +1138,7 @@
         <!-- Package 7: Pilgrimage & Heritage Special -->
         <div class="tour-package-card reveal delay-1">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-madurai.png" width="400" height="250" loading="lazy" alt="Guruvayur Madurai Trichy Temple Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Guruvayur Madurai Pilgrimage');" />
+            <img src="./public/assets/images/dest-madurai.webp" width="400" height="250" loading="lazy" alt="Guruvayur Madurai Trichy Temple Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Guruvayur Madurai Pilgrimage');" />
             <span class="package-badge-category">Heritage Pilgrimage</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1085,7 +1164,7 @@
         <!-- Package 8: Kanyakumari Sunrise Tour -->
         <div class="tour-package-card reveal delay-2">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-mysore.png" width="400" height="250" loading="lazy" alt="Kanyakumari Sunrise Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kanyakumari Sunrise Tour');" />
+            <img src="./public/assets/images/dest-mysore.webp" width="400" height="250" loading="lazy" alt="Kanyakumari Sunrise Cab Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Kanyakumari Sunrise Tour');" />
             <span class="package-badge-category">Southern Coast Special</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1111,7 +1190,7 @@
         <!-- Package 9: Wildlife & Safari Adventure -->
         <div class="tour-package-card reveal delay-3">
           <div class="package-img-wrap">
-            <img src="./public/assets/images/dest-valparai.png" width="400" height="250" loading="lazy" alt="Mudumalai Wayanad Calicut Safari Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Mudumalai Wayanad Safari');" />
+            <img src="./public/assets/images/dest-valparai.webp" width="400" height="250" loading="lazy" alt="Mudumalai Wayanad Calicut Safari Tour" referrerpolicy="no-referrer" onerror="window.handleImgError(this, 'Mudumalai Wayanad Safari');" />
             <span class="package-badge-category">Wildlife & Safari</span>
             <span class="package-duration-pill">⏱️ 2 Days / 1 Night</span>
           </div>
@@ -1151,7 +1230,7 @@
         <article class="blog-card reveal delay-1">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-ooty.png" width="400" height="250" loading="lazy" 
+              src="./public/assets/images/blog-ooty.webp" width="400" height="250" loading="lazy" 
               alt="Coimbatore to Ooty Cab Travel Guide"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Ooty Travel Guide');"
@@ -1179,7 +1258,7 @@
         <article class="blog-card reveal delay-2">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-tips.png" width="400" height="250" loading="lazy" 
+              src="./public/assets/images/blog-tips.webp" width="400" height="250" loading="lazy" 
               alt="Coimbatore Airport Taxi Booking"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Airport Taxi Guide');"
@@ -1207,7 +1286,7 @@
         <article class="blog-card reveal delay-3">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/fleet-sedan.png" width="400" height="250" loading="lazy" 
+              src="./public/assets/images/fleet-sedan.webp" width="400" height="250" loading="lazy" 
               alt="Oneway Cabs vs Round Trip"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Oneway Cabs Guide');"
@@ -1235,7 +1314,7 @@
         <article class="blog-card reveal delay-4">
           <div class="blog-img-box">
             <img 
-              src="./public/assets/images/blog-valparai.png" width="400" height="250" loading="lazy" 
+              src="./public/assets/images/blog-valparai.webp" width="400" height="250" loading="lazy" 
               alt="Scenic Hill Drives from Coimbatore"
               referrerpolicy="no-referrer"
               onerror="window.handleImgError(this, 'Valparai Hill Drives');"
@@ -1567,7 +1646,7 @@
   </div>
 
   <!-- Pure JavaScript File -->
-  <script type="module" src="./script.js"></script>
+  <script type="module" src="./script.js" defer></script>
 </body>
 </html>
 
