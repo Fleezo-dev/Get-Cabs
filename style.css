@@ -37,9 +37,16 @@
   box-sizing: border-box;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -48,6 +55,12 @@ body {
   background-color: #f3f4f6;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 a {
@@ -71,6 +84,13 @@ img {
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 14px;
+  }
 }
 
 /* Performance: Defer rendering cost of below-the-fold sections */
@@ -95,14 +115,22 @@ img {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 12px 20px;
   font-size: 1rem;
   font-weight: 700;
   border-radius: var(--radius-sm);
   border: 2px solid transparent;
   cursor: pointer;
   transition: var(--transition);
-  white-space: nowrap;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+  }
 }
 
 .btn-red {
@@ -2476,21 +2504,36 @@ body {
 .tour-hero-header {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: #ffffff;
-  padding: 28px;
+  padding: 28px 24px;
   border-radius: 16px;
   margin-bottom: 24px;
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .tour-hero-header h1 {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 4.5vw, 2.2rem) !important;
   font-weight: 900;
   color: #ffffff;
   margin: 10px 0;
   line-height: 1.25;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.tour-hero-header p {
+  color: #e2e8f0;
+  font-size: clamp(0.92rem, 2.5vw, 1.15rem) !important;
+  max-width: 850px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .tour-specs-strip {
@@ -2502,6 +2545,9 @@ body {
   border-radius: 12px;
   margin: 20px 0 28px 0;
   border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .tour-spec-item {
@@ -2530,6 +2576,10 @@ body {
   padding: 20px 24px;
   margin-bottom: 20px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .guide-section-box h3 {
@@ -2543,7 +2593,11 @@ body {
   gap: 10px;
   border-bottom: 2px solid var(--brand-yellow);
   padding-bottom: 6px;
-  width: max-content;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .road-bends-warning {
@@ -2554,6 +2608,8 @@ body {
   margin: 14px 0;
   font-size: 0.95rem;
   color: #111827;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .restroom-food-box {
@@ -2564,39 +2620,144 @@ body {
   margin: 14px 0;
   font-size: 0.95rem;
   color: #111827;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .price-table-wrap {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   margin-top: 16px;
+  box-sizing: border-box;
+  display: block;
 }
 
-.price-table-wrap table {
+.price-table-wrap table,
+.tariff-table {
   width: 100%;
   border-collapse: collapse;
   background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
-.price-table-wrap th {
+.price-table-wrap th,
+.tariff-table th {
   background: var(--brand-dark);
   color: #ffffff;
-  padding: 12px 16px;
+  padding: 12px 14px;
   font-family: var(--font-display);
   font-size: 0.88rem;
   text-align: left;
 }
 
-.price-table-wrap td {
-  padding: 12px 16px;
+.price-table-wrap td,
+.tariff-table td {
+  padding: 12px 14px;
   border-bottom: 1px solid #e2e8f0;
   font-size: 0.92rem;
   color: #111827;
 }
 
-.price-table-wrap tr:nth-child(even) td {
+.price-table-wrap tr:nth-child(even) td,
+.tariff-table tr:nth-child(even) td {
   background: #f8fafc;
+}
+
+/* Category Filter Chips for Routes Page */
+.category-chip {
+  white-space: normal !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 768px) {
+  .tour-hero-header {
+    padding: 20px 16px !important;
+    border-radius: 12px !important;
+  }
+  .tour-hero-header div[style*="display:flex"],
+  .tour-hero-header div[style*="display: flex"] {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .tour-hero-header .btn {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem !important;
+  }
+  .guide-section-box {
+    padding: 16px 12px !important;
+    border-radius: 10px !important;
+  }
+  .tariff-table th,
+  .tariff-table td {
+    padding: 9px 10px !important;
+    font-size: 0.84rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-nav {
+    padding: 8px 0;
+  }
+  .header-nav .container {
+    padding: 0 12px;
+    gap: 6px;
+  }
+  .brand-logo {
+    gap: 6px;
+  }
+  .logo-svg-wrap {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1.05rem !important;
+  }
+  .brand-name {
+    font-size: 1.02rem;
+  }
+  .brand-tagline {
+    font-size: 0.5rem;
+    letter-spacing: 0.5px;
+  }
+  .call-btn-head {
+    padding: 6px 8px;
+    font-size: 0.8rem;
+    gap: 4px;
+  }
+  .mobile-toggle {
+    min-width: 38px;
+    min-height: 38px;
+    width: 38px;
+    height: 38px;
+    font-size: 1.15rem;
+  }
+  .tour-specs-strip {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+  #route-category-filters {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  #route-category-filters .category-chip {
+    flex: 1 1 calc(50% - 6px) !important;
+    font-size: 0.78rem !important;
+    padding: 8px 6px !important;
+  }
+  #route-category-filters .category-chip[data-cat="all"] {
+    flex: 1 1 100% !important;
+  }
 }
 
 /* Taxi Comparison Section */
@@ -2741,7 +2902,7 @@ body {
     margin-top: 20px;
   }
   .comparison-table {
-    min-width: 520px;
+    min-width: 480px;
     font-size: 0.88rem;
   }
   .comparison-table th, 
@@ -2758,5 +2919,38 @@ body {
     width: 100%;
     justify-content: center;
     padding: 12px 20px;
+  }
+}
+
+/* Global Mobile Viewport & Grid Protection */
+@media (max-width: 600px) {
+  #routes-grid,
+  .blogs-grid,
+  .tour-packages-grid,
+  div[style*="grid-template-columns:repeat(auto-fill"],
+  div[style*="grid-template-columns: repeat(auto-fill"],
+  div[style*="grid-template-columns:repeat(auto-fit"],
+  div[style*="grid-template-columns: repeat(auto-fit"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  
+  .floating-action-stack {
+    bottom: 74px !important;
+    right: 12px !important;
+    gap: 10px !important;
+  }
+  
+  .floating-action-stack a {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  
+  .bottom-app-dock {
+    height: 60px !important;
+  }
+  
+  .dock-item {
+    font-size: 0.7rem !important;
   }
 }
