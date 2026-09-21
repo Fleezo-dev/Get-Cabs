@@ -84,7 +84,7 @@ app.get("/api/autocomplete", async (req, res) => {
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ", Tamil Nadu")}&addressdetails=1&limit=6&countrycodes=in`,
         {
           headers: {
-            "User-Agent": "GetCabsCoimbatore/1.0 (booking@getcabs.in)"
+            "User-Agent": "GetCabs/1.0 (booking@getcabs.in)"
           }
         }
       );
