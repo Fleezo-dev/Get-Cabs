@@ -6,7 +6,7 @@
 
 // Global SVG Image Placeholder & Error Handler
 window.getFallbackSvg = function(title) {
-  const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Get Cabs Coimbatore';
+  const cleanTitle = title ? String(title).replace(/['"<>&]/g, '') : 'Get Cabs';
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
     <defs>
       <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -20,7 +20,7 @@ window.getFallbackSvg = function(title) {
     <path d="M280 170 L300 120 L320 170 Z" fill="#ffb703"/>
     <circle cx="300" cy="115" r="8" fill="#ffffff"/>
     <text x="300" y="235" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">${cleanTitle}</text>
-    <text x="300" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffb703" text-anchor="middle">🚕 Get Cabs Coimbatore • Hotline: 9894020156</text>
+    <text x="300" y="270" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="700" fill="#ffb703" text-anchor="middle">🚕 Get Cabs • Hotline: 9894020156</text>
   </svg>`;
   return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
 };
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // 3. Get Cabs Coimbatore Fare & Rate Calculation Engine
+  // 3. Get Cabs Fare & Rate Calculation Engine
   // Pricing Rules specified by company (Effective 01/06/2026):
   // 1. Local Rides (Mini/Sedan): Base fare ₹150 for first 2.5 KM; ₹30/KM for subsequent KM.
   // 2. Hourly Package: Min 1 Hour ₹325 (Running KM ₹20-25/KM); 10 Hrs / 100 KM Day Rental ₹3,000 (Extra KM ₹10, Extra Hr ₹150); 12 Hrs / 100 KM Day Rental ₹3,500.
@@ -332,7 +332,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           // Dynamic WhatsApp link with formatted booking message
           const waMsg = encodeURIComponent(
-            `*🚕 GET CABS COIMBATORE - BOOKING REQUEST*\n\n` +
+            `*🚕 GET CABS - BOOKING REQUEST*\n\n` +
             `• *Booking Type:* ${item.type}\n` +
             `• *Pickup:* ${pickup}\n` +
             `• *Drop:* ${drop}\n` +
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function () {
       title: 'Privacy Policy',
       content: `
         <div class="policy-doc">
-          <h2>Get Cabs Coimbatore Privacy Policy</h2>
+          <h2>Get Cabs Privacy Policy</h2>
           <p style="color:var(--text-muted);">Last Updated: July 2026 • Official Policy Document</p>
           
           <div class="policy-highlight-box">
@@ -761,7 +761,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <p>All online reservation details are stored securely. Payment information handled directly with drivers via cash or UPI is verified immediately with zero stored card details.</p>
 
           <h3>4. Contact Data Officer</h3>
-          <p>For privacy queries or request for data removal, contact Get Cabs Coimbatore at <strong>booking@getcabs.in</strong> or call <strong>9894020156</strong>.</p>
+          <p>For privacy queries or request for data removal, contact Get Cabs at <strong>booking@getcabs.in</strong> or call <strong>9894020156</strong>.</p>
         </div>
       `
     },
@@ -770,7 +770,7 @@ document.addEventListener('DOMContentLoaded', function () {
       content: `
         <div class="policy-doc">
           <h2>Terms & Conditions of Service</h2>
-          <p style="color:var(--text-muted);">Effective July 2026 • Get Cabs Coimbatore</p>
+          <p style="color:var(--text-muted);">Effective July 2026 • Get Cabs</p>
 
           <h3>1. Booking & Fare Structure</h3>
           <ul>
@@ -846,10 +846,10 @@ document.addEventListener('DOMContentLoaded', function () {
       `
     },
     'contact-us': {
-      title: 'Contact Get Cabs Coimbatore',
+      title: 'Contact Get Cabs',
       content: `
         <div class="policy-doc">
-          <h2>Contact Us - Get Cabs Coimbatore</h2>
+          <h2>Contact Us - Get Cabs</h2>
           <p>We are available 24 hours a day, 7 days a week to assist your travel needs.</p>
 
           <div class="contact-info-list">
@@ -882,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           <div class="contact-card-box" style="margin-top:24px;">
             <h3>Send Direct Message / Query</h3>
-            <form id="direct-contact-form" onsubmit="event.preventDefault(); alert('Thank you! Get Cabs Coimbatore team will call you back at 9894020156 shortly.');">
+            <form id="direct-contact-form" onsubmit="event.preventDefault(); alert('Thank you! Get Cabs team will call you back at 9894020156 shortly.');">
               <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:12px;">
                 <input type="text" placeholder="Your Name" required style="padding:10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem; width:100%;" />
                 <input type="tel" placeholder="Your Phone Number" required style="padding:10px; border:1px solid #cbd5e1; border-radius:6px; font-size:0.95rem; width:100%;" />
@@ -2354,7 +2354,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (query.includes('contact') || query.includes('number') || query.includes('phone') || query.includes('call') || query.includes('book')) {
       return `
-        <strong>📞 Contact Get Cabs Coimbatore 24/7:</strong><br>
+        <strong>📞 Contact Get Cabs 24/7:</strong><br>
         • <strong>Hotline:</strong> <a href="tel:9894020156" style="color:var(--brand-red); font-weight:800;">9894020156</a><br>
         • <strong>WhatsApp:</strong> <a href="https://wa.me/919894020156" target="_blank" style="color:#25d366; font-weight:800;">Chat on WhatsApp</a><br>
         • <strong>Office:</strong> Gandhipuram & Peelamedu Airport Rd, Coimbatore<br><br>

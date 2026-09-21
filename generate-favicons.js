@@ -88,7 +88,7 @@ async function generate() {
 
   // Create valid Web App Manifest
   const manifest = {
-    name: "Get Cabs Coimbatore",
+    name: "Get Cabs",
     short_name: "Get Cabs",
     description: "24/7 Call Taxi Service in Coimbatore - Local, Airport & Outstation Cabs",
     start_url: "/",

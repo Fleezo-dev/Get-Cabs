@@ -1,6 +1,6 @@
 {
-  "name": "Get Cabs Coimbatore",
-  "description": "Official Get Cabs Coimbatore taxi booking platform with instant local city rides, outstation cabs, one-way drops, tariff calculator, WhatsApp dispatch, and AI travel assistant.",
+  "name": "Get Cabs",
+  "description": "Official Get Cabs taxi booking platform with instant local city rides in Coimbatore, outstation cabs, one-way drops, tariff calculator, WhatsApp dispatch, and AI travel assistant.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

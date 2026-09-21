@@ -29,7 +29,7 @@ function getGenAI(): GoogleGenAI | null {
 
 // Health Check API
 app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", app: "Get Cabs Coimbatore", timestamp: new Date().toISOString() });
+  res.json({ status: "ok", app: "Get Cabs", timestamp: new Date().toISOString() });
 });
 
 // Address Autocomplete API using Ola Maps with local fallback
@@ -122,17 +122,17 @@ app.post("/api/chat", async (req, res) => {
     if (!ai) {
       // Graceful rich response when no API key configured
       res.json({
-        text: `Hello! I am **Get Cabs Coimbatore AI Assistant (Gemini Mini)**.\n\n### 🚕 Official Get Cabs Fare Card & Price Maths:\n- **Local Rides (City Mini/Sedan)**: Base ₹150 for first 2.5 KM, then ₹28-₹30/KM. Mandatory Default AC, Zero Surge Pricing!\n- **Hourly Rental Packages**:\n  • 1 Hr (10 KM free): ₹350/hr (Extra KM @ ₹25/KM)\n  • Package A (10 Hrs / 100 KM): ₹3,000 flat (Extra KM @ ₹10/KM)\n  • Package B (12 Hrs / 100 KM): ₹3,500 flat (Extra hr @ ₹150/hr)\n- **Fixed One-Way Drop Routes**:\n  • **Annur / Isha Yoga**: ₹1,100 (30-33 KM)\n  • **Anaikatti**: ₹1,300 (30 KM)\n  • **Mettupalayam**: ₹1,400 (37 KM)\n  • **Pollachi / Avinashi**: ₹1,600 (43 KM)\n  • **Airport (CJB) to Tiruppur**: ₹1,700 (46 KM)\n  • **Tiruppur Town / Palakkad**: ₹1,900 (52-55 KM)\n  • **Airport (CJB) to Palakkad**: ₹2,200 (61 KM)\n  • **Sathyamangalam / Udumalpet**: ₹2,500 (70 KM)\n  • **Coonoor / Kotagiri**: ₹2,900 (70-83 KM)\n  • **Erode**: ₹3,500 (100 KM)\n  • **Ooty Bus Stand**: ₹3,500 (87 KM)\n  • **Palani**: ₹3,900 (110 KM)\n  • **Munnar**: ₹3,800 oneway / ₹6,500 (2D1N)\n  • **Kodaikanal**: ₹4,200 oneway / ₹6,800 (2D1N)\n  • **Yercaud**: ₹4,800 (Full Day)\n  • **Valparai (40 Hairpins)**: ₹2,799 - ₹3,500 oneway / ₹4,500 Tour\n\n### 📐 Price Calculation Maths:\n1. **Oneway < 100 KM**: Round-trip distance × ₹17/KM (Go + Return).\n2. **Oneway > 130 KM**: Round-trip distance × ₹14/KM + ₹400 Driver Batta.\n3. **Hill Stations**: Driver Batta & Mountain Allowance included.\n\n📞 **24/7 Helpline & WhatsApp**: [9894020156](tel:9894020156) | ✉️ booking@getcabs.in`,
+        text: `Hello! I am **Get Cabs AI Assistant (Gemini Mini)**.\n\n### 🚕 Official Get Cabs Fare Card & Price Maths:\n- **Local Rides (City Mini/Sedan)**: Base ₹150 for first 2.5 KM, then ₹28-₹30/KM. Mandatory Default AC, Zero Surge Pricing!\n- **Hourly Rental Packages**:\n  • 1 Hr (10 KM free): ₹350/hr (Extra KM @ ₹25/KM)\n  • Package A (10 Hrs / 100 KM): ₹3,000 flat (Extra KM @ ₹10/KM)\n  • Package B (12 Hrs / 100 KM): ₹3,500 flat (Extra hr @ ₹150/hr)\n- **Fixed One-Way Drop Routes**:\n  • **Annur / Isha Yoga**: ₹1,100 (30-33 KM)\n  • **Anaikatti**: ₹1,300 (30 KM)\n  • **Mettupalayam**: ₹1,400 (37 KM)\n  • **Pollachi / Avinashi**: ₹1,600 (43 KM)\n  • **Airport (CJB) to Tiruppur**: ₹1,700 (46 KM)\n  • **Tiruppur Town / Palakkad**: ₹1,900 (52-55 KM)\n  • **Airport (CJB) to Palakkad**: ₹2,200 (61 KM)\n  • **Sathyamangalam / Udumalpet**: ₹2,500 (70 KM)\n  • **Coonoor / Kotagiri**: ₹2,900 (70-83 KM)\n  • **Erode**: ₹3,500 (100 KM)\n  • **Ooty Bus Stand**: ₹3,500 (87 KM)\n  • **Palani**: ₹3,900 (110 KM)\n  • **Munnar**: ₹3,800 oneway / ₹6,500 (2D1N)\n  • **Kodaikanal**: ₹4,200 oneway / ₹6,800 (2D1N)\n  • **Yercaud**: ₹4,800 (Full Day)\n  • **Valparai (40 Hairpins)**: ₹2,799 - ₹3,500 oneway / ₹4,500 Tour\n\n### 📐 Price Calculation Maths:\n1. **Oneway < 100 KM**: Round-trip distance × ₹17/KM (Go + Return).\n2. **Oneway > 130 KM**: Round-trip distance × ₹14/KM + ₹400 Driver Batta.\n3. **Hill Stations**: Driver Batta & Mountain Allowance included.\n\n📞 **24/7 Helpline & WhatsApp**: [9894020156](tel:9894020156) | ✉️ booking@getcabs.in`,
         sources: []
       });
       return;
     }
 
-    const systemInstruction = `You are the official AI Dispatcher & Travel Assistant (Gemini Mini) for "Get Cabs Coimbatore" (Website: getcabs.in, 24/7 Hotline & WhatsApp: 9894020156, Email: booking@getcabs.in).
-You are an expert on every detail, pricing tariff, calculation math, route, vehicle type, policy, and hill station guideline of Get Cabs Coimbatore.
+    const systemInstruction = `You are the official AI Dispatcher & Travel Assistant (Gemini Mini) for "Get Cabs" (Website: getcabs.in, 24/7 Hotline & WhatsApp: 9894020156, Email: booking@getcabs.in).
+You are an expert on every detail, pricing tariff, calculation math, route, vehicle type, policy, and hill station guideline of Get Cabs.
 
 1. BRAND & OPERATIONS:
-- Company: Get Cabs Coimbatore
+- Company: Get Cabs
 - Contact: Call or WhatsApp 9894020156
 - Main Hubs: Gandhipuram, Coimbatore Railway Junction, Coimbatore Airport (CJB) Peelamedu, RS Puram, Saravanampatti, Singanallur, Ukkadam.
 - 5-10 minute rapid doorstep dispatch across Coimbatore.
@@ -240,7 +240,7 @@ RESPONSE GUIDELINES:
     });
 
     const candidate = response.candidates?.[0];
-    const text = candidate?.content?.parts?.[0]?.text || "Thank you for contacting Get Cabs Coimbatore. For instant cab bookings, please call or WhatsApp 9894020156.";
+    const text = candidate?.content?.parts?.[0]?.text || "Thank you for contacting Get Cabs. For instant cab bookings, please call or WhatsApp 9894020156.";
     
     // Extract web search grounding sources if available
     const sources: { title: string; url: string }[] = [];
@@ -263,7 +263,7 @@ RESPONSE GUIDELINES:
   } catch (error: any) {
     console.error("Gemini API error in /api/chat:", error);
     res.status(200).json({
-      text: "👋 Welcome to **Get Cabs Coimbatore (Gemini Mini)**!\n\nWe are available 24/7 for instant city cabs, CJB Airport transfers, and hill station tours (Ooty ₹3,500, Pollachi ₹1,600, Palani ₹3,900, Isha ₹1,100, Munnar ₹3,800).\n\n📞 **Call / WhatsApp 24/7**: [9894020156](tel:9894020156)\n📍 **Main Hubs**: Gandhipuram, Railway Station, Peelamedu Airport, RS Puram, Saravanampatti.",
+      text: "👋 Welcome to **Get Cabs (Gemini Mini)**!\n\nWe are available 24/7 for instant city cabs in Coimbatore, CJB Airport transfers, and hill station tours (Ooty ₹3,500, Pollachi ₹1,600, Palani ₹3,900, Isha ₹1,100, Munnar ₹3,800).\n\n📞 **Call / WhatsApp 24/7**: [9894020156](tel:9894020156)\n📍 **Main Hubs**: Gandhipuram, Railway Station, Peelamedu Airport, RS Puram, Saravanampatti.",
       sources: []
     });
   }
@@ -285,7 +285,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Get Cabs Coimbatore server running on http://0.0.0.0:${PORT}`);
+    console.log(`Get Cabs server running on http://0.0.0.0:${PORT}`);
   });
 }
 
